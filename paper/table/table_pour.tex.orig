@@ -1,0 +1,9 @@
+\small
+\begin{tabular}{c|c|c}
+\toprule
+         & Human & Diffusion Policy \\
+\midrule
+IoU & 0.79  & 0.74             \\
+Succ \%   & 1.00  & 0.79            \\
+\bottomrule
+\end{tabular}

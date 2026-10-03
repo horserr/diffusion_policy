@@ -1,0 +1,19 @@
+\setlength\tabcolsep{2.1 pt}
+\begin{tabular}{l|lllllllllllll}
+\toprule
+           % & Ctrl & To & Ta & Tp & \#D-params & \#V-params & \#Layers & Emb Dim & Attn Dropout & Lr   & WDecay & D-Iters Train & D-Iters Eval \\
+\textbf{H-Param} & \textbf{Ctrl} & \textbf{To} & \textbf{Ta} & \textbf{Tp} & \textbf{\#D-params} & \textbf{\#V-params} & \textbf{\#Layers} & \textbf{Emb Dim} & \textbf{Attn Drp} & \textbf{Lr} & \textbf{WDecay} & \textbf{D-Iters Train} & \textbf{D-Iters Eval} \\
+
+\midrule
+Lift       & Pos  & 2  & 8  & 10 & 9        & 22       & 8      & 256     & 0.3          & 1e-4 & 1e-3   & 100           & 100          \\
+Can        & Pos  & 2  & 8  & 10 & 9        & 22       & 8      & 256     & 0.3          & 1e-4 & 1e-3   & 100           & 100          \\
+Square     & Pos  & 2  & 8  & 10 & 9        & 22       & 8      & 256     & 0.3          & 1e-4 & 1e-3   & 100           & 100          \\
+Transport  & Pos  & 2  & 8  & 10 & 9        & 45       & 8      & 256     & 0.3          & 1e-4 & 1e-3   & 100           & 100          \\
+ToolHang   & Pos  & 2  & 8  & 10 & 9        & 22       & 8      & 256     & 0.3          & 1e-4 & 1e-3   & 100           & 100          \\
+Push-T     & Pos  & 2  & 8  & 16 & 9        & 22       & 8      & 256     & 0.01         & 1e-4 & 1e-1   & 100           & 100          \\
+Block Push & Vel  & 3  & 1  & 5  & 9        & 0        & 8      & 256     & 0.3          & 1e-4 & 1e-3   & 100           & 100          \\
+Kitchen    & Pos  & 4  & 8  & 16 & 80       & 0        & 8      & 768     & 0.1          & 1e-4 & 1e-3   & 100           & 100          \\
+\midrule
+Real Push-T     & Pos  & 2  & 6  & 16 & 80      & 22       & 8      & 768     & 0.3          & 1e-4 & 1e-3   & 100           & 16           \\
+\bottomrule
+\end{tabular}

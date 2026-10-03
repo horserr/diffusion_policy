@@ -1,0 +1,38 @@
+\usepackage{graphics} % for pdf, bitmapped graphics files
+\usepackage{epsfig} % for postscript graphics files
+\usepackage{mathptmx} % assumes new font selection scheme installed
+\usepackage{times} % assumes new font selection scheme installed
+\usepackage{amsmath} % assumes amsmath package installed
+\usepackage{amssymb}  % assumes amsmath package installed
+\usepackage{siunitx} % for SI units
+\usepackage{textcomp}
+\usepackage{gensymb} % for degree command
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{xcolor}
+
+\let\labelindent\relax
+\usepackage{enumitem}
+\usepackage{xspace}
+
+%\usepackage{soul}
+%\usepackage{cite}
+\usepackage{makecell}
+\usepackage{multicol}
+\usepackage{rotating}
+\usepackage[percent]{overpic}
+%\usepackage{ulem}
+
+%\usepackage{microtype}
+\usepackage{contour}
+\usepackage{courier}
+
+\usepackage{subcaption} % issues a warning with CVPR/ICCV format
+\usepackage[font=small]{caption}
+\usepackage[percent]{overpic}
+
+\usepackage[11pt]{moresize}
+
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\textcolor{green}{\ding{51}}}%
+\newcommand{\xmark}{\textcolor{red}{\ding{55}}}%

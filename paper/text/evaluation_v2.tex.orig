@@ -1,0 +1,344 @@
+\begin{table*}[h]
+    
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\includegraphics[width=0.835\linewidth]{figure/sim_task_thumbnails.pdf}
+\label{tab:sim_benchmark_state}
+% https://docs.google.com/drawings/d/11Azs8uUlZ2CER5NarlBOTnGhj3o_jm59wIqQKW3rXNQ/edit
+
+\vspace{1mm}
+{
+\centering
+\input{table/table_low_dim.tex}
+
+\caption{\textbf{Behavior Cloning Benchmark (State Policy) \label{tab:table_low_dim} } 
+We present success rates with different checkpoint selection methods in the format of (max performance) / (average of last 10 checkpoints), with each averaged across 3 training seeds and 50 different environment initial conditions (150 in total). 
+LSTM-GMM corresponds to BC-RNN in RoboMimic\cite{robomimic}, which we reproduced and obtained slightly {better} results than the original paper. Our results show that Diffusion Policy significantly improves state-of-the-art performance across the board.
+% \label{tab:table_low_dim}
+% Numbers are success rate shown with different checkpoint selection methods: (max performance) / (average of last 10 checkpoints), which are then averaged across 3 training seeds and 50 different env initial conditions each (150 in total). Higher the better. LSTM-GMM correspond to BC-RNN in RoboMimic \cite{robomimic}. LSTM-GMM numbers are from our reproduction (generally slightly higher than the original paper).  \label{tab:table_low_dim}
+}
+\vspace{2mm}
+
+
+\input{table/table_image.tex}
+\caption{\textbf{Behavior Cloning Benchmark (Visual Policy) \label{tab:table_image}} Performance are reported in the same format as in Tab \ref{tab:table_low_dim}. LSTM-GMM numbers were reproduced to get a complete evaluation in addition to the best checkpoint performance reported. Diffusion Policy shows consistent performance improvement, especially for complex tasks like Transport and ToolHang. }
+}
+%\vspace{-3mm}
+\end{table*}
+
+\section{Evaluation}
+We systematically evaluate Diffusion Policy on 15 tasks from 4 benchmarks \cite{ibc, gupta2019relay, robomimic, bet}. This evaluation suite includes both simulated and real environments, single and multiple task benchmarks, fully actuated and under-actuated systems, and rigid and fluid objects.  We found Diffusion Policy to consistently outperform the prior state-of-the-art on all of the tested benchmarks, with an average success-rate improvement of 46.9\%. In the following sections, we  provide an overview of each task, our evaluation methodology on that task, and our key takeaways.
+
+\subsection{Simulation Environments and datasets}
+\textbf{Robomimic}
+\cite{robomimic} is a large-scale robotic manipulation benchmark designed to study imitation learning and offline RL. The benchmark consists of 5 tasks with a proficient human (PH) teleoperated demonstration dataset for each and mixed proficient/non-proficient human (MH) demonstration datasets for 4 of the tasks (9 variants in total). For each variant, we report results for both state- and image-based observations. Properties for each task are summarized in Tab \ref{tab:robomimic_tasks}.
+
+\begin{table}
+\centering
+\input{table/table_sim_tasks.tex}
+\caption{\textbf{Tasks Summary.} \# Rob: number of robots, \#Obj: number of objects, ActD: action dimension, PH: proficient-human demonstration, MH: multi-human demonstration, Steps: max number of rollout steps, HiPrec: whether the task has a high precision requirement. BlockPush uses 1000 episodes of scripted  demonstrations.}
+%The 5 robomimic \cite{robomimic} tasks and the Push-T have both state-based and vision-based tasks. 4 of the 5 robomimic tasks has both proficient-human ``PH'' and multi-human ``MH'' datasets. The Block Pushing task has 1000 machine-generated demonstrations instead. The Push-T environment allows an eval episode to be terminated earlier than 300 steps.
+\label{tab:robomimic_tasks} 
+\vspace{-5mm}
+\end{table}
+
+\textbf{Push-T}
+\label{sec:eval_sim_pusht}
+adapted from IBC \cite{ibc}, requires pushing a T-shaped block (gray) to a fixed target (red) with a circular end-effector (blue)s. Variation is added by random initial conditions for T block and end-effector. The task requires exploiting complex and contact-rich object dynamics to push the T block precisely, using point contacts. There are two variants: one with RGB image observations and another with 9 2D keypoints obtained from the ground-truth pose of the T block, both with proprioception for end-effector location.
+% is a task we adopted from IBC \cite{ibc} to explore how Diffusion Policy work under the complex, contact-rich, and underactuated dynamics. The task is to push a T-shaped block (colored gray) into a fixed target pose (colored red) with a fixed circular end-effector (colored blue). The variation between episodes comes from the random initial condition for both the T block and the end-effector. Since the T block can only be pushed around by point contacts, the agent needs to exploit the object dynamics and constantly to change contact points and strategies to push the T block into a precise location. The task as two variants, one uses RGB image-based observation, and another is state-based, where 9 fixed 2D keypoints are computed from the ground truth pose for the T block. In addition, each variant also provides the current end-effector location for proprioception.
+
+\textbf{Multimodal Block Pushing} adapted from BET \cite{bet}, this task tests the policy's ability to model multimodal action distributions by pushing two blocks into two squares in any order. The demonstration data is generated by a scripted oracle with access to groundtruth state info. This oracle randomly selects an initial block to push and moves it to a randomly selected square. The remaining block is then pushed into the remaining square. This task contains \textbf{long-horizon} multimodality that can not be modeled by a single function mapping from observation to action.
+
+\textbf{Franka Kitchen} is a popular environment for evaluating the ability of IL and Offline-RL methods to learn multiple long-horizon tasks. Proposed in Relay Policy Learning \cite{gupta2019relay}, the Franka Kitchen environment contains 7 objects for interaction and comes with a human demonstration dataset of 566 demonstrations, each completing 4 tasks in arbitrary order. The goal is to execute as many demonstrated tasks as possible, regardless of order, showcasing both short-horizon and long-horizon multimodality.
+
+\begin{table}[t]
+\centering
+% \includegraphics[width=0.45\linewidth]{example-image}~\includegraphics[width=0.45\linewidth]{example-image}
+    % {Placeholder for thumbnails of each task}
+\includegraphics[width=0.9\linewidth]{figure/multitask_thumbnails.pdf}
+
+\vspace{2mm}
+\input{table/table_low_dim_bet.tex}
+\caption{\textbf{Multi-Stage Tasks (State Observation)}. 
+\label{tab:multi_stage}
+For PushBlock, $px$ is the frequency of pushing $x$ blocks into the targets. 
+For Kitchen, $px$ is the frequency of interacting with $x$ or more objects (e.g. bottom burner). 
+Diffusion Policy performs better, especially for difficult metrics such as $p2$ for Block Pushing and $p4$ for Kitchen, as demonstrated by our results.
+}
+\vspace{-4mm}
+\end{table}
+
+\subsection{Evaluation Methodology}
+We present the \textbf{best-performing for each baseline method} on each benchmark from all possible sources -- our reproduced result (LSTM-GMM) or original number reported in the paper (BET, IBC). We report results from the average of the last 10 checkpoints (saved every 50 epochs) across \textbf{3} training seeds and \textbf{50} environment initializations 
+\footnote{Due to a bug in our evaluation code, only 22 environment initializations are used for robomimic tasks. This does not change our conclusion since all baseline methods are evaluated in the same way.} 
+(an average of \textbf{1500} experiments in total). The metric for most tasks is success rate, except for the Push-T task, which uses target area coverage.
+In addition, we report the average of best-performing checkpoints for robomimic and Push-T tasks to be consistent with the evaluation methodology of their respective original papers \cite{robomimic, ibc}. All state-based tasks are trained for 4500 epochs, and image-based tasks for 3000 epochs. Each method is evaluated with its best-performing action space: position control for Diffusion Policy and velocity control for baselines (the effect of action space will be discussed in detail in Sec \ref{sec:eval_pos_vs_vel}).  
+The results from these simulation benchmarks are summarized in Table \ref{tab:table_low_dim} and Table \ref{tab:table_image}.
+
+
+\subsection{Key Findings}
+
+Diffusion Policy outperforms alternative methods on all tasks and variants, with both state and vision observations, in our simulation benchmark study (Tabs \ref{tab:table_low_dim}, \ref{tab:table_image} and \ref{tab:multi_stage}) with an average improvement of 46.9\%. The following paragraphs summarize the key takeaways.  
+
+
+\textbf{Diffusion Policy can express short-horizon multimodality.}
+We define short-horizon action multimodality as multiple ways of achieving \textbf{the same immediate goal}, which is prevalent in human demonstration data \cite{robomimic}. %For example, when navigating around a fixed obstacle, one may choose to traverse it on the left or the right leading to short-horizon action multimodality.
+In Fig \ref{fig:multimodal}, we present a case study of this type of short-horizon multimodality in the Push-T task. Diffusion Policy learns to approach the contact point equally likely from left or right, while LSTM-GMM \cite{robomimic} and IBC \cite{ibc} exhibit bias toward one side and BET \cite{bet} cannot commit to one mode.
+
+% In Fig \ref{fig:multimodal}, we present a case study for short-horizon multimodality on the Push-T task, where the T block (gray), the goal (green) and the endeffector (blue) are aligned such that the task exhibits reflection symmetry. Despite this symmetrical state was never demostrated in the training dataset, Diffusion Policy learns to approach the contact point equally likely from left and right. In contrast, LSTM-GMM \cite{robomimic} and IBC \cite{ibc} bais heavily toward one side, while BET \cite{bet} is unable to commit to one mode of action.
+
+
+% Similar performance is achieved by Diffusion Policy with CNN or Transformer backbones using state-based observations. However, Diffusion Policy with Transformer outperforms the  CNN variant on the velocity-based Block Pushing task. The inverse occurs with image observations where Diffusion Policy with Transformer has lower performance due to the difficulty in end-to-end training and tuning.
+
+% In our large-scale simulation benchmark study (Tab \ref{tab:table_low_dim}, \ref{tab:table_image} and \ref{tab:multi_stage}), Diffusion Policy outperforms baseline methods on all tasks and all variants with both state and vision observations, and often by a large margin. On tasks with state-based observations, Diffusion Policy with CNN and Transformer backbone yield similar performance. The Block Pushing task is an exception where Difusion Policy with Transformer is better (Tab \ref{tab:multi_stage} left. The task's velocity-based scripted oracle generated demonstration dataset prefers to be learned in velocity control action space, which puts CNN in disadvantage for its inductive bias on predicting low-frequency signal. On the other hand, Diffusion Policy with transformer has lower performance on tasks with image observations (Tab \ref{tab:table_image}) due to the increased difficulty of training and tuning transformer and vision encoder together end-to-end.
+
+\textbf{Diffusion Policy can express long-horizon multimodality.}
+Long-horizon multimodality is the completion of \textbf{different sub-goals} in inconsistent order. For example, the order of pushing a particular block in the Block Push task or the order of interacting with 7 possible objects in the Kitchen task are arbitrary.
+%
+We find that Diffusion Policy copes well with this type of multimodality; it outperforms baselines on both tasks by a large margin: 32\% improvement on Block Push's p2 metric and 213\% improvement on Kitchen's p4 metric.
+
+\textbf{Diffusion Policy can better leverage position control.}
+\label{sec:eval_pos_vs_vel}
+Our ablation study (Fig. \ref{fig:pos_vs_vel}) shows that selecting position control as the diffusion-policy action space significantly outperformed velocity control. The baseline methods we evaluate, however, work best with velocity control (and this is reflected in the literature where most existing work reports using velocity-control action spaces \cite{robomimic, bet, zhang2018deep, florence2019self, mandlekar2020learning, mandlekar2020iris}).
+
+%However, position control action space hurts performance for baseline methods, which explains why most existing work on behavior cloning for manipulation use velocity control \cite{robomimic, bet, zhang2018deep, florence2019self, mandlekar2020learning, mandlekar2020iris}.
+
+% Most existing work on behavior cloning for robotic manipulation uses some variant of velocity control (e.g. delta pose relative to the end-effector pose in the previous time step) as action space \cite{robomimic, bet, zhang2018deep, florence2019self, mandlekar2020learning, mandlekar2020iris}. Our ablation study as well as our experience in tuning baseline methods confirm that velocity control is the better action space for baseline methods, with performance penalty of switching to position action space at around 20\%. In contrast, we found switching to position control leads to significant performance improvement for Diffusion Policy as shown in Fig. \ref{fig:pos_vs_vel}. The choice of action space is discussed in detail in Sec \ref{sec:property_pos_vs_vel}.
+
+\textbf{The tradeoff in action horizon.}
+As discussed in Sec \ref{sec:action_sequence}, 
+having an action horizon greater than 1 helps the policy predict consistent actions and compensate for idle portions of the demonstration, but too long a horizon reduces performance due to slow reaction time. Our experiment confirms this trade-off (Fig. \ref{fig:ablation} left) and found the action horizon of 8 steps to be optimal for most tasks that we tested. 
+
+\textbf{Robustness against latency.}
+Diffusion Policy employs receding horizon position control to predict a sequence of actions into the future. This design helps address the latency gap caused by image processing, policy inference, and network delay. Our ablation study with simulated latency showed Diffusion Policy is able to maintain peak performance with latency up to 4 steps (Fig \ref{fig:ablation}). We also find that velocity control is more affected by latency than position control, likely due to compounding error effects.
+
+% Diffusion Policy's receding horizon control formulation allows predicting more actions than what's necessary for immediate execution. These extra actions predicted by previous policy execution can fill in the gap between the start of the current policy inference and when the first predicted action can be executed by the robot, which enables Diffusion Policy to be robust against latency. 
+
+
+\textbf{Diffusion Policy is stable to train.}
+We found that the optimal hyperparameters for Diffusion Policy are mostly consistent across tasks.  In contrast,  IBC \cite{ibc} is prone to training instability. This property is discussed in Sec \ref{sec:ibc_stability}.
+
+% move to appendix
+% \begin{figure}[h]
+% \centering
+% \includegraphics[width=\linewidth]{figure/sample_efficiency_figure.pdf}
+
+% \caption{\textbf{Data Efficiency.} 
+% \label{fig:data_efficiency}
+% Percentage change in success rate relative to the maximum (for both methods) is shown on the Y-axis.
+% % \textbf{Left}: trade-off between temporal consistency and responsiveness when selecting the action horizon. 
+% % \textbf{Right}: Diffusion Policy with position control is more robust against latency than velocity control.
+% % (b) The impact of observation horizon length on task performance.(d) Diffusion Policy is more sample efficient than BCRNN.
+% }
+% \end{figure}
+
+\subsection{Ablation Study}
+\label{sec:arch_ablation}
+We explore alternative vision encoder design decisions on the simulated robomimic square task.
+Specifically, we evaluated 3 different architectures: 
+ResNet-18, ResNet-34 \cite{resnet} 
+and ViT-B/16 \cite{dosovitskiy2020image}. 
+For each architecture, we evaluated 3 different training strategies:
+training end-to-end from scratch,
+using frozen pre-trained vision encoder, 
+and finetuning pre-trained vision encoders (with 10x lower learning rate with respect to the policy network).
+We use ImageNet-21k \cite{ridnik2021imagenet21k} pretraining for ResNet and CLIP \cite{radford2021learning} pretraining for ViT-B/16.
+The quantitative comparison on square task with proficient-human (PH) dataset is shown in Tab. \ref{tab:ablation_vision_encorder}.
+
+We found training ViT from scratch to be challenging (with only 22\% success rate), likely due to the limited amount data.
+We also found training with frozen pretrained vision encoder to yield poor performance, which indicates that diffusion policy prefers different vision representation than what is offered in popular pretraining methods.
+However, we found finetuning the pretrained vision encoder with a small learning rate (10x smaller vs diffusion policy network) gives the best performance overall. This is especially true for the CLIP-trained ViT-B/16, which reaches 98\% success rate with only 50 epochs of training.
+Overall, the best performance across different architectures is not large, despite their significant theoretical capacity gap. We anticipate that their performance gap could be more pronounced on a complex task.
+
+\begin{table}
+\centering
+\begin{tabular}{r|c|cc}
+\toprule
+Archicture \& & From & \multicolumn{2}{c}{Pretrained} \\
+Prertain Datset& Scatch & frozen & finetuning \\
+\midrule
+Resnet18 (in21) & 0.94   & 0.58      & 0.92             \\
+Resnet34 (in21)& 0.92   & 0.40      & 0.94             \\
+ViT-base (clip)& 0.22   & 0.70      & 0.98             \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Vision Encoder Comparison} All models are trained on the robomimic square (ph) task using CNN-based diffusion policy. Each model is trained for 500 epochs and evaluated every 50 epochs under 50 different environment initial conditions.}
+\label{tab:ablation_vision_encorder} 
+\vspace{-2mm}
+\end{table}
+
+
+\section{Realworld Evaluation}
+We evaluated Diffusion Policy in the realworld performance on 4 tasks across 2 hardware setups -- with training data from different demonstrators for each setup. On the realworld Push-T task, we perform ablations examining Diffusion Policy on 2 architecture options and 3 visual encoder options; we also benchmarked against 2 baseline methods with both position-control and velocity-control action spaces. On all tasks, Diffusion Policy variants with both CNN backbones and end-to-end-trained visual encoders yielded the best performance. More details about the task setup and parameters may be found in supplemental materials.
+
+\begin{table}[t]
+\centering
+\includegraphics[width=0.9\linewidth]{figure/real_task_setup.pdf}
+% https://docs.google.com/drawings/d/1LZCbfrzt3Ww82h2LQ9rt8BGS1fJCw5TyY-AnGr1RfjE/edit
+% \label{fig:real_pusht_setup}
+
+\vspace{2mm}
+\input{table/table_real.tex}
+
+\caption{\textbf{Realworld Push-T Experiment.} 
+\label{tab:real_pusht}
+a) Hardware setup.  
+b) Illustration of the task. The robot needs to \textcircled{\raisebox{-0.9pt}{1}} precisely push the T-shaped block into the target region, \textbf{and} \textcircled{\raisebox{-0.9pt}{2}} move the end-effector to the end-zone. 
+c) The ground truth end state used to calculate IoU metrics used in this table. Table: Success is defined by the end-state IoU greater than the minimum IoU in the demonstration dataset. Average episode duration presented in seconds. T-E2E stands for end-to-end trained Transformer-based Diffusion Policy}
+
+\vspace{-4mm}
+\end{table}
+
+\begin{figure*}
+\centering
+\includegraphics[width=\linewidth]{figure/real_results.pdf}
+
+% https://docs.google.com/drawings/d/1LY-oKJ32jSTlIpMnEnoyYGfd58Il9Zzf-YhFS8Axin0/edit
+\caption{\textbf{Realworld Push-T Comparisons.} 
+\label{fig:real_pusht_comparison}
+Columns 1-4 show action trajectories based on key events. The last column shows averaged images of the end state. 
+\textbf{A}: Diffusion policy (End2End) achieves more accurate and consistent end states.
+\textbf{B}: Diffusion Policy (R3M) gets stuck initially but later recovers and finishes the task. 
+\textbf{C}: LSTM-GMM fails to reach the end zone while adjusting the T block, blocking the eval camera view.
+\textbf{D}: IBC prematurely ends the pushing stage.
+}
+\vspace{-2mm}
+\end{figure*}
+
+\subsection{Realworld Push-T Task}
+
+Real-world Push-T is significantly harder than the simulated version due to 3 modifications: 1. The real-world Push-T task is \textbf{multi-stage}. It requires the robot to \textcircled{\raisebox{-0.9pt}{1}} push the T block into the target and then \textcircled{\raisebox{-0.9pt}{2}} move its end-effector into a designated end-zone to avoid occlusion. 2. The policy needs to make fine adjustments to make sure the T is fully in the goal region before heading to the end-zone, creating additional short-term multimodality. 3. The IoU metric is measured at the \textbf{last step} instead of taking the maximum over all steps. We threshold success rate by the minimum achieved IoU metric from the human demonstration dataset. Our UR5-based experiment setup is shown in Fig \ref{tab:real_pusht}. Diffusion Policy predicts robot commands at 10 Hz and these commands then linearly interpolated to 125 Hz for robot execution.
+
+% The real-world Push-T task is a multi-stage task that requires the robot to 1) push the T block into the target 2) move the end-effector into an end-zone to avoid occlusion. The policy can control episode termination by keeping the end-effector in the end-zone for 0.5 seconds. The target IoU is measured at the last stepmaking the task more challenging than the simulated version. Each episode has a 60-second time limit.
+
+% Push-T is the main real-world experiment that is used to study key design decisions in a real-world setup.  This task is inspired by the simulated Push T task, but with a few important modifications: 1) The real push-T \shuran{Push-T} task is \textbf{multi-stage}. The robot needs to first push the T block into the target, and then move the end-effector into a designated end-zone, as shown in Fig \ref{tab:real_pusht} (b) The end-zone is designed to avoid the robot's occlusion for the top-down evaluation camera. Avoiding occlusion is part of the task. 2) The policy has control over \textbf{episode termination}. By keeping the end-effector within the end-zone for more than 0.5 seconds, the evaluation episode is terminated. This requires the policy to decide when is the pose of the T block "good enough", which creates additional multimodality with its effect demonstrated in Fig \ref{fig:real_pusht_comparison}. Each episode also has a maximum time limit of 60 seconds. 3) The T block target IoU is measured at the \textbf{last step} for each episode, instead of taking maximum over all steps done in the simulated Push T task. Overall, these modifications makes the real-world Push T task more challenging that the simulated version.
+
+
+\textbf{Result Analysis.}
+Diffusion Policy performed close to human level with 95\% success rate and 0.8 v.s. 0.84 average IoU, compared with the 0\% and 20\% success rate of best-performing IBC and LSTM-GMM variants. Fig \ref{fig:real_pusht_comparison} qualitatively illustrates the behavior for each method starting from the same initial condition. 
+We observed that poor performance during the transition between stages is the most common failure case for the baseline method due to high multimodality during those sections and an ambiguous decision boundary. LSTM-GMM got stuck near the T block in 8 out of 20 evaluations (3rd row), while IBC prematurely left the T block in 6 out of 20 evaluations (4th row). 
+We did not follow the common practice of removing \textbf{idle actions} from training data due to task requirements, which also contributed to LSTM and IBC's tendency to overfit on small actions and get stuck in this task. The results are best appreciated with videos in supplemental materials.
+
+% Diffusion Policy reorients and adjusts the pose of the T block before heading to the end-zone (first row), while LSTM-GMM and IBC struggled in transition between stages. LSTM-GMM got stuck during fine-adjustment while IBC prematurely left the T block, both are common failure cases for each baseline method. 
+
+
+% Diffusion Policy adjusted the T block's pose before reaching end-zone, while LSTM-GMM and IBC struggled in transition between stages. LSTM-GMM got stuck during fine-adjustment while IBC prematurely left the T block. Real-world Push T task added multimodality and uncertainty, making it harder than the simulated version. The performance lead of Diffusion Policy is due to its ability to handle these challenges and the absence of idle actions in the training dataset. 
+
+
+% Looking across different methods, Diffusion Policy yields \textbf{close-to-human} performance with 95\%  success rate and 0.8 vs 0.84 average IoU, which is significantly higher than the best performing variants of IBC and LSTM-GMM baselines with 0\% and 20\% success rate respectively. Figure \ref{fig:real_pusht_comparison} qualitatively illustrate the behavior for each methods starting from the same initial condition. 
+% While Diffusion Policy straightforwardly reorient and adjusts the pose of the T block before heading to the end-zone (first row), both LSTM-GMM and IBC had difficulty on the transition between two stages of this task. In 8 out of 20 evaluation episodes, LSTM-GMM get stuck in near the T block while performing fine-adjustment for the T block's position, including the episode shown as the third row. On the other hand, IBC prematurely leaves the T block and head to the end-zone in 6 out of 20 evaluation episodes, including the episode shown as the fourth row. 
+% The behavior of LSTM-GMM and IBC suggests that the realworld Push T task is significantly harder due to its multi-stage nature and the \textbf{added multimodality} and uncertainty of deciding stage transition. 
+% Due to the slow and fine adjustments needed to achieve high accuracy for this task and the requirement to stay still in the end-zone to terminate episode, we did not follow the common practice to remove \textbf{idle actions} in the training dataset, which also contributes LSTM and IBC's tendency to get stuck in this task.
+% Consequently, the performance lead of Diffusion Policy under these challenges is greater that of the simulated push T task, shown in Tab \ref{tab:table_image}. 
+
+
+\textbf{End-to-end v.s. pre-trained vision encoders}
+We tested Diffusion Policy with pre-trained vision encoders (ImageNet \cite{deng2009imagenet} and R3M\cite{nair2022r3m}), as seen in Tab. \ref{tab:real_pusht}. Diffusion Policy with R3M achieves an 80\% success rate but predicts jittery actions and is more likely to get stuck compared to the end-to-end trained version. Diffusion Policy with ImageNet showed less promising results with abrupt actions and poor performance. We found that end-to-end training is still the most effective way to incorporate visual observation into Diffusion Policy, and our best-performing models were all end-to-end trained.
+
+% We tested Diffusion Policy with pre-trained vision encoders (ImageNet and R3M) but found end-to-end training to be more effective. Diffusion Policy with R3M performed decently but had more jittery predictions and getting stuck compared to end-to-end trained version. Diffusion Policy with ImageNet showed even less promising results with abrupt actions. End-to-end training is still the most effective way to incorporate vision observation into Diffusion Policy.
+
+% We also experimented with pre-trained vision encoders for Diffusion Policy on this task by replacing the end-to-end trained ResNet-18 encoder with a frozen ImageNet \cite{deng2009imagenet} pretrained backbone or a frozen R3M encoder \cite{nair2022r3m} pretrained on Ego4D \cite{grauman2022ego4d}. Diffusion Policy trained with frozen pretrained vision backbones are slightly different in: 1) 224x224 images are accepted instead of the 320x240 resolution used for end-to-end, 2) the spatial softmax pooling end-to-end Diffusion Policy inherited from robomimic \cite{robomimic} is replaced by global average pooling from standard ResNet. We found Diffusion Policy with R3M to perform decently albiet lower than the end-to-end trained version. As shown in the second row of Fig \ref{fig:real_pusht_comparison}, we found Diffusion Policy-R3M to predict more jittery actions and get stuck more frequently than End-to-end trained version. However, Diffuison Policy-R3M often able to escape from getting stuck due to the stochastic nature of DDPM sampling. In contrast Diffusion Policy-ImageNet yield much less promising result, with even more jittery action prediction and sometimes moving abruptly to one corner of the table. From these experiments, we can conclude that training vision encoder \textbf{end-to-end} is still the most effective way to incorporate vision observation to Diffusion Policy, despite its data quantity disadvantage over pretrained models.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figure/real_robustness.pdf}
+
+% https://docs.google.com/drawings/d/13XwTyXJvdaa6HUrVMTcfdnoLmYsXkhqscgtLth0J-zk/edit
+\caption{\textbf{Robustness Test for Diffusion Policy.} 
+\label{fig:robustness}
+\textbf{Left}: A waving hand in front of the camera for 3 seconds causes slight jitter, but the predicted actions still function as expected. 
+% Left: Waving hand in front of the front camera for 3 seconds. The predicted actions are slightly jittery but still function as expected. 
+\textbf{Middle}: Diffusion Policy immediately corrects shifted block position to the goal state during the pushing stage.
+\textbf{Right}: Policy immediately aborts heading to the end zone, returning the block to goal state upon detecting block shift. This novel behavior was never demonstrated.
+% Shifting the block while the policy has finished manipulating the block and is heading toward the end zone. The policy immediately aborts from moving to the end zone and moves the block back to the goal state. The behavior of aborting from heading to the end zone was never included in the demonstration. 
+Please check the videos in the supplementary material. }
+
+\vspace{-4mm}
+\end{figure}
+
+\textbf{Robustness against perturbation}
+Diffusion Policy's robustness against visual and physical perturbations was evaluated in a separate episode from experiments in Tab \ref{tab:real_pusht}. As shown in Fig \ref{fig:robustness}, three types of perturbations are applied. 
+1) The front camera was blocked for 3 secs by a waving hand (left column), but the diffusion policy, despite exhibiting some jitter, remained on-course and pushed the T block into position.
+2) We shifted the T block while Diffusion Policy was making fine adjustments to the T block's position. Diffusion policy immediately re-planned to push from the opposite direction, negating the impact of perturbation. 
+3) We moved the T block while the robot was en route to the end-zone after the first stage's completion. The Diffusion Policy immediately changed course to adjust the T block back to its target and then continued to the end-zone. This experiment indicates that Diffusion Policy may be able to \textbf{synthesize novel behavior} in response to unseen observations.
+% In a separate evaluation episode from the experiment to generate Tab \ref{tab:real_pusht}, we examine Diffusion Policy's robustness against visual and physical perturbations. 
+% As shown in Fig \ref{fig:robustness}, three types of perturbations are applied. 
+% Shown in the left column, the front camera is blocked by a quickly waving hand for 3 seconds. Diffusion policy predicts action with increased jitteryness, but was able to remain on-course to push the T block into position, which demonstrates the robustness of end-to-end trained vision encoders despite being trained without any augmentations. 
+% In the middle column, we shifted the T block while Diffusion Policy was fine-adjusting the T block's position. Diffusion policy immediately re-planed to push from the opposite direction, negating the impact of perturbation. 
+% In the right column, while the robot has pushed the T block in to the target and is en route to the end-zone, we moved the T block out of the target. Diffusion Policy immediately changed course back to adjust the T block back to its target, before proceeding to the end-zone. There is no demonstration in the training dataset that exhibits the behavior of going back to T block pushing while previously en route to the end zone. 
+% This experiment demonstrates that Diffusion Policy is able to \textbf{synthesize novel behavior} in the face of unseen observations.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.9\linewidth]{figure/mug_task.pdf}
+% https://docs.google.com/drawings/d/169fC65dwdP1iOt87cCU2_9R8WrIZPQjq1YwE9EZejW4/edit
+
+\vspace{1.5mm}
+\input{table/table_mug_result.tex}
+\caption{
+\textbf{6DoF Mug Flipping Task.} 
+\label{fig:mug_task}
+The robot needs to 
+\textcircled{\raisebox{-0.9pt}{1}} Pickup a randomly placed mug and place it lip down (marked orange).
+\textcircled{\raisebox{-0.9pt}{2}} Rotate the mug such that its handle is pointing left.
+}
+
+\vspace{-4mm}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figure/real_sauce_setup.pdf}
+% https://docs.google.com/drawings/d/1j7LKFAxZ2SXro3YbTC49KA1a7iuld-u5aY0oJHZzNUA/edit
+% \includegraphics[width=0.5\linewidth]{figure/real_spreading.pdf}
+% https://docs.google.com/drawings/d/1XDVS3JRA8forPWfl3t-7kVvTgDhtGlcqK0HsKyE-0Xc/edit
+
+\vspace{1.5mm}
+\input{table/table_sauce_spreading.tex}
+\caption{\textbf{Realworld Sauce Manipulation. } 
+% \todo{Update the table, double check the number} 
+\label{fig:real_sauce_manipulation}
+[Left] \textbf{6DoF pouring Task.} The robot needs to \textcircled{\raisebox{-0.9pt}{1}} dip the ladle to scoop sauce from the bowl, \textcircled{\raisebox{-0.9pt}{2}} approach the center of the pizza dough, \textcircled{\raisebox{-0.9pt}{3}} pour sauce, and \textcircled{\raisebox{-0.9pt}{4}} lift the ladle to finish the task.
+[Right] \textbf{Periodic spreading Task} The robot needs to \textcircled{\raisebox{-0.9pt}{1}} approach the center of the sauce with a grasped spoon, \textcircled{\raisebox{-0.9pt}{2}} spread the sauce to cover pizza in a spiral pattern, and \textcircled{\raisebox{-0.9pt}{3}} lift the spoon to finish the task.
+}
+
+\vspace{-4mm}
+\end{figure}
+
+\subsection{Mug Flipping Task}
+The mug flipping task is designed to test Diffusion Policy's ability to handle complex \textbf{3D rotations} while operating close to the hardware's kinematic limits.
+The goal is to reorient a randomly placed mug to have \textcircled{\raisebox{-0.9pt}{1}} the lip facing down \textcircled{\raisebox{-0.9pt}{2}} the handle pointing left, as shown in Fig. \ref{fig:mug_task}.
+% To generate the 250 demonstration episodes, the operator uses a mix strategies with multiple stages.
+Depending on the mug's initial pose, the demonstrator might directly place the mug in desired orientation, or may use additional push of the handle to rotation the mug.
+As a result, the demonstration dataset is highly multi-modal: grasp vs push, different types of grasps (forehand vs backhand) or local grasp adjustments (rotation around mug's principle axis), and are particularly challenging for baseline approaches to capture. 
+
+\textbf{Result Analysis.} Diffusion policy is able to complete this task with 90\% success rate over 20 trials. The richness of captured behaviors is best appreciated with the video. Although never demonstrated, the policy is also able to sequence multiple pushes for handle alignment or regrasps for dropped mug when necessary. For comparison, we also train a LSTM-GMM policy trained with a subset of the same data. For 20 in-distribution initial conditions, the LSTM-GMM policy never aligns properly with respect to the mug, and fails to grasp in all trials.
+
+\subsection{Sauce Pouring and Spreading}
+The sauce pouring and spreading tasks are designed to test Diffusion Policy's ability to work with \textbf{non-rigid} objects, \textbf{6 Dof} action spaces, and \textbf{periodic} actions in real-world setups. Our Franka Panda setup and tasks are shown in Fig \ref{fig:real_sauce_manipulation}. The goal for the \textbf{6DoF pouring task} is to pour one full ladle of sauce onto the center of the pizza dough, with performance measured by IoU between the poured sauce mask and a nominal circle at the center of the pizza dough (illustrated by the green circle in Fig \ref{fig:real_sauce_manipulation}). 
+The goal for the \textbf{periodic spreading task} is to spread sauce on pizza dough, with performance measured by sauce coverage. 
+Variations across evaluation episodes come from random locations for the dough and the sauce bowl. 
+The success rate is computed by thresholding with minimum human performance. 
+Results are best viewed in supplemental videos. 
+% For both tasks, we train with the same hyperparameters from the Pusth-T task and get successful policies on our first attempt.
+Both tasks were trained with the same Push-T hyperparameters, and successful policies were achieved on the first attempt.
+
+The sauce pouring task requires the robot to remain stationary for a period of time to fill the ladle with viscous tomato sauce. The resulting idle actions are known to be challenging for behavior cloning algorithms and therefore are often avoided or filtered out. Fine adjustments during pouring are necessary during sauce pouring to ensure coverage and to achieve the desired shape.
+
+The demonstrated sauce-spreading strategy is inspired by the human chef technique, which requires both a long-horizon cyclic pattern to maximize coverage and short-horizon feedback for even distribution (since the tomato sauce used often drips out in lumps with unpredictable sizes). Periodic motions are known to be difficult to learn and therefore are often addressed by specialized action representations \cite{yang2022periodic}.
+Both tasks require the policy to self-terminate by lifting the ladle/spoon.
+
+% Due to the wide opening of the ladle and the lumpiness of the sauce, fine pose adjustments are necessary during sauce pouring to ensure the location and shape of the poured sauce. This task also has different phases with similar appearances, which can make policy learning challenging. Our sauce-spreading strategy is inspired by a common human chef technique. This strategy is cyclic in general, but it also requires fine adjustments of the spoon position relative to the edge of the sauce in order to push just the right amount of sauce outwards. This requires the policy to capture both the long-horizon cyclic pattern and short-horizon feedback. For both tasks, the policy needs to learn when to lift the tool to finish. 
+
+% \textbf{Pouring Evaluation}
+% Goal for this task is to pour one full ladle of sauce onto the center the pizza dough. Score is assigned by the IoU between the poured sauce mask and a nominal circle at the center of the pizza dough. Radius of the nominal circle is computed from the average poured sauce mask size from all the expert demonstrations. Since this task has more distinctive stages, we also assigned partial credits to roll outs that did not fully complete the task. 
+
+% \textbf{Spreading Evaluation}
+% Goal for this task is to evenly cover pizza dough with sauce. Amount of sauce is fixed during all training and evaluation runs. Score is assigned based on sauce coverage. 
+
+\textbf{Result Analysis.}
+Diffusion policy achieves close-to-human performance on both tasks, with coverage 0.74 vs 0.79 on pouring and 0.77 vs 0.79 on spreading. 
+Diffusion policy reacted gracefully to external perturbations such as moving the pizza dough by hand during pouring and spreading. 
+Results are best appreciated with videos in the supplemental material. 
+
+LSTM-GMM performs poorly on both sauce pouring and spreading tasks. It failed to lift the ladle after successfully scooping sauce in 15 out of 20 of the pouring trials. When the ladle was successfully lifted, the sauce was poured off-centered. LSTM-GMM failed to self-terminate in all trials. We suspect LSTM-GMM's hidden state failed to capture sufficiently long history to distinguish between the ladle dipping and the lifting phases of the task. For sauce spreading, LSTM-GMM always lifts the spoon right after the start, and failed to make contact with the sauce in all 20 experiments. 
+% We suspect the cyclic demonstrations make LSTM-GMM training hard.

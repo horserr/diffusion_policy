@@ -1,0 +1,42 @@
+%% comments
+\definecolor{MyDarkBlue}{rgb}{0,0.08,1}
+\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}
+\definecolor{MyDarkGreen}{rgb}{0.02,0.6,0.02}
+\definecolor{MyDarkRed}{rgb}{0.8,0.02,0.02}
+\definecolor{MyDarkOrange}{rgb}{0.40,0.2,0.02}
+\definecolor{MyPurple}{RGB}{111,0,255}
+\definecolor{MyRed}{rgb}{1.0,0.0,0.0}
+\definecolor{MyGold}{rgb}{0.75,0.6,0.12}
+\definecolor{MyDarkgray}{rgb}{0.66, 0.66, 0.66}
+\definecolor{MyPink}{rgb}{0.9, 0.33, 0.5}
+\definecolor{MyCyan}{rgb}{0., 0.4, 0.4}
+
+% \newcommand{\rev}[1]{{\hypersetup{citecolor=blue}\textcolor{blue}{#1}}}
+\newcommand{\rev}[1]{#1}
+
+\newcommand{\shuran}[1]{\textcolor{MyDarkGreen}{[Shuran: #1]}}
+\newcommand{\zhenjia}[1]{\textcolor{MyDarkBlue}{[Zhenjia: #1]}}
+\newcommand{\cheng}[1]{\textcolor{MyPurple}{[Cheng: #1]}}
+\newcommand{\xian}[1]{\textcolor{MyDarkOrange}{[Xian: #1]}}
+\newcommand{\xingyu}[1]{\textcolor{MyDarkgray}{[Xian: #1]}}
+\newcommand{\zhiao}[1]{\textcolor{MyPink}{[Zhiao: #1]}}
+\newcommand{\yilun}[1]{\textcolor{MyPink}{[Yilun: #1]}}
+\newcommand{\ben}[1]{\textcolor{MyGold}{[Ben: #1]}}
+\newcommand{\sfeng}[1]{\textcolor{MyCyan}{[sfeng: #1]}}
+\newcommand\todo[1]{\textcolor{red}{[TODO: #1]}}
+\newcommand\ijrrupdate[1]{\textcolor{blue}{#1}}
+
+% \newcommand{\mypara}{\vspace{-2.5mm}\paragraph}
+\newcommand{\mypara}[1]{\par\vspace*{0mm} \textbf{{#1}}}
+
+\usepackage{tikz}
+
+\def\halfcheckmark{\tikz\draw[scale=0.4,fill=black](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle (0.75,0.2) -- (0.77,0.2)  -- (0.6,0.7) -- cycle;}
+
+\def\OURS{Diffusion Policy\xspace}
+
+\newcommand{\legalTM}{\textsuperscript{\texttrademark}}
+
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}

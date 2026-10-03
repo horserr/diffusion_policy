@@ -1,0 +1,29 @@
+\setlength\tabcolsep{2 pt}
+\small
+\begin{tabular}{c|cccccccc}
+\toprule
+Task      & \# Rob & \# Obj & ActD & \#PH & \#MH & Steps & Img? & HiPrec \\
+\midrule
+\multicolumn{1}{c}{} & \multicolumn{8}{c}{Simulation Benchmark} \\
+% \midrule
+\midrule
+Lift      & 1      & 1      & 7    & 200   & 300   & 400       & Yes    & No       \\
+Can       & 1      & 1      & 7    & 200   & 300   & 400       & Yes    & No       \\
+Square    & 1      & 1      & 7    & 200   & 300   & 400       & Yes    & Yes      \\
+Transport & 2      & 3      & 14   & 200   & 300   & 700       & Yes    & No       \\
+ToolHang  & 1      & 2      & 7    & 200   & 0     & 700       & Yes    & Yes      \\
+\midrule
+Push-T    & 1      & 1      & 2    & 200   & 0     & 300       & Yes    & Yes      \\
+\midrule
+BlockPush & 1      & 2      & 2    & 0     & 0     & 350       & No     & No       \\
+\midrule
+Kitchen   & 1      & 7      & 9    & 656   & 0     & 280       & No     & No      \\
+\midrule
+\multicolumn{1}{c}{} & \multicolumn{8}{c}{Realworld Benchmark} \\
+\midrule
+Push-T    & 1      & 1      & 2    & 136   & 0     & 600       & Yes    & Yes  \\
+6DoF Pour   & 1    & liquid      & 6    & 90   & 0     & 600       & Yes    & No  \\
+Peri Spread   & 1      & liquid      & 6    & 90   & 0     & 600       & Yes    & No  \\
+Mug Flip  & 1      & 1      & 7    & 250   & 0     & 600       & Yes    & No  \\
+\bottomrule
+\end{tabular}

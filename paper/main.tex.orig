@@ -1,0 +1,99 @@
+% sage_latex_guidelines.tex V1.20, 14 January 2017
+
+\documentclass[Afour,sageh,times]{sagej}
+
+\usepackage{moreverb,url}
+\usepackage{multicol}
+
+\usepackage[colorlinks,bookmarksopen,bookmarksnumbered,citecolor=red,urlcolor=red]{hyperref}
+
+\newcommand\BibTeX{{\rmfamily B\kern-.05em \textsc{i\kern-.025em b}\kern-.08em
+T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+
+\input{format/packages}
+\input{format/macros}
+% numbers option provides compact numerical references in the text. 
+% \usepackage[numbers]{natbib}
+
+\def\volumeyear{2016}
+\setcounter{secnumdepth}{3}
+\begin{document}
+
+\runninghead{Diffusion Policy}
+
+\title{Diffusion Policy: Visuomotor Policy Learning via Action Diffusion}
+% \title{.}
+
+\author{Cheng Chi$^{*}$\affilnum{1}, Zhenjia Xu$^{*}$\affilnum{1}, Siyuan Feng\affilnum{2}, Eric Cousineau\affilnum{2}, Yilun Du\affilnum{3},  Benjamin Burchfiel\affilnum{2}, Russ Tedrake \affilnum{2,3}, Shuran Song\affilnum{1,4}}
+
+\affiliation{\affilnum{*} Joint First Author \\
+\affilnum{1}Columbia University, US
+\affilnum{2}Toyota Research Institute, US.
+\affilnum{3}MIT, US.
+\affilnum{4}Stanford University, US.
+}
+
+\corrauth{Cheng Chi, Columbia University, US}
+\email{chenng.chi@columbia.edu}
+
+
+\begin{abstract} This paper introduces Diffusion Policy, a new way of generating robot behavior by representing a robot's visuomotor policy as a conditional denoising diffusion process. We benchmark Diffusion Policy across 15 different tasks from 4 different robot manipulation benchmarks and find that it consistently outperforms existing state-of-the-art robot learning methods with an average improvement of 46.9\%. 
+Diffusion Policy learns the gradient of the action-distribution score function and iteratively optimizes with respect to this gradient field during inference via a series of stochastic Langevin dynamics steps.
+We find that the diffusion formulation yields powerful advantages when used for robot policies, including gracefully handling multimodal action distributions, being suitable for high-dimensional action spaces, and exhibiting impressive training stability.
+To fully unlock the potential of diffusion models for visuomotor policy learning on physical robots, this paper presents a set of key technical contributions including the incorporation of receding horizon control, visual conditioning, and the time-series diffusion transformer. 
+We hope this work will help motivate a new generation of policy learning techniques that are able to leverage the powerful generative modeling capabilities of diffusion models. Code, data, and training details is available \url{diffusion-policy.cs.columbia.edu}
+\end{abstract}
+% Cover letter
+% https://docs.google.com/document/d/1culy_CpPnacKd7t0tIkUwMVL6aU-bS-yiKFrnbBn2CQ/edit
+\keywords{Imitation learning, visuomotor policy, manipulation}
+
+\twocolumn[{
+\renewcommand\twocolumn[1][]{#1}
+\maketitle
+    \vspace{-5mm}
+\begin{center}
+    \includegraphics[width=0.95\textwidth]{figure/DP_teaser.pdf}
+    \captionof{figure}{\textbf{Policy Representations.} \label{fig:policy_rep} a) Explicit policy with different types of action representations.  b) Implicit policy learns an energy function conditioned on both action and observation and optimizes for actions that minimize the energy landscape c) Diffusion policy refines noise into actions via a learned gradient field. This formulation provides stable training, allows the learned policy to accurately model multimodal action distributions, and accommodates high-dimensional action sequences. 
+    % \todo{update figure to make b and c consistent, both 2D or both 3D. Make it clear c is gradient of b change J (a) -> E (a)}
+    } 
+%https://docs.google.com/drawings/d/1SNd5_khk3RsYuE9JCwUVjmRED-eF3UrO78XnzbOwE4Y/edit?usp=sharing
+\end{center}
+}]
+
+
+
+% \begin{figure*}[!h]
+% \centering
+% \includegraphics[width=\linewidth]{figure/DP_teaser.pdf}
+% % https://docs.google.com/drawings/d/1SNd5_khk3RsYuE9JCwUVjmRED-eF3UrO78XnzbOwE4Y/edit?usp=sharing
+% \caption{\textbf{Policy Representations.} \label{fig:policy_rep} a) Explicit policy with different types of action representations.  b) Implicit policy learns an energy function conditioned on both action and observation and optimizes for actions that minimize the energy landscape c) Diffusion policy refines noise into actions via a learned gradient field. This formulation provides stable training, allows the learned policy to accurately model multimodal action distributions, and accommodates high-dimensional action sequences.} 
+% % \label{fig:my_label}
+% \end{figure*}
+
+\input{text/introduction.tex}
+\input{text/method.tex}
+\input{text/evaluation_v2.tex}
+\input{text/evaluation_tri.tex}
+\input{text/relatedwork.tex}
+\input{text/conclusion.tex}
+
+% \begin{acks} 
+% We would like to thank Zhenjia Xu, Huy Ha, Dale McConachie, Naveen Kuppuswamy for their helpful feedback and fruitful discussions.
+% \end{acks}
+
+\begin{funding}
+This work was supported by the Toyota Research Institute, NSF CMMI-2037101 and NSF IIS-2132519. We would like to thank Google for the UR5 robot hardware. The views and conclusions contained herein are those of the authors and should not be interpreted as necessarily representing the official policies, either expressed or implied, of the sponsors.
+\end{funding}
+
+%%Harvard (name/date)
+\bibliographystyle{SageH}
+%%Vancouver (numbered)
+%\bibliographystyle{SageV}
+% \bibliographystyle{plainnat}
+\bibliography{references}
+
+\appendix
+\input{text/supp.tex}
+
+\end{document}

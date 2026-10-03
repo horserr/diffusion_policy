@@ -1,0 +1,28 @@
+% \section{What Doesn't Work}
+% Diffusion + BatchNorm (EMA, n\_obs\_steps).
+% Shared vision encoder for all views (end-to-end).
+
+\section{Limitations and Future Work}
+% Although we have demonstrated diffusion policy’s effectiveness with extensive evaluations in both simulation and real-world systems, there are still several limitations that can be improved in future works. 
+% First, our current implementation of Diffusion Policy inherits limitations from Behavior Cloning, such as the rescued performance when trained with sub-optimal demonstration data. Future works could apply Diffusion Policy to other paradigms such as Offline Reinforcement Learning to take advantage of suboptimal and negative data. 
+% Second, Diffusion Policy incurs relatively high computational cost and inference latency compared to simpler methods such as LSTM-GMM. This is partially mitigated by our action sequence prediction approach however, may not be sufficient for tasks requiring high rate control. Future works could take advantage of latest advancement in diffusion model acceleration methods such as new noise schedules, inference solvers as well as consistency models to reduce number of inference steps required.
+
+Although we have demonstrated the effectiveness of diffusion policy in both simulation and real-world systems, there are limitations that future work can improve. 
+First, our implementation inherits limitations from behavior cloning, such as suboptimal performance with inadequate demonstration data. Diffusion policy can be applied to other paradigms, such as reinforcement learning \cite{wang2023diffusion,hansen2023idql}, to take advantage of suboptimal and negative data. 
+Second, diffusion policy has higher computational costs and inference latency compared to simpler methods like LSTM-GMM. Our action sequence prediction approach partially mitigates this issue, but may not suffice for tasks requiring high rate control. Future work can exploit the latest advancements in diffusion model acceleration methods to reduce the number of inference steps required, such as new noise schedules \cite{chen2023importance}, inference solvers \cite{karras2022elucidating}, and consistency models \cite{song2023consistency}.
+
+
+\section{Conclusion}
+%Systematic studies on the characteristic of diffusion policy and demonstrate its effectiveness in the context of robot manipulation and behavior clone. 
+%Through these practical recommendations on the key design decisions for applying diffusion policy to  different robotics tasks.
+
+%\ben{Taking a stab at fleshing this out, feel free to modify:} 
+In this work, we assess the feasibility of diffusion-based policies for robot behaviors. Through a comprehensive evaluation of 15 tasks in simulation and the real world, we demonstrate that diffusion-based visuomotor policies consistently and definitively outperform existing methods while also being stable and easy to train. Our results also highlight critical design factors, including receding-horizon action prediction, end-effector position control, and efficient visual conditioning, that is crucial for unlocking the full potential of diffusion-based policies. While many factors affect the ultimate quality of behavior-cloned policies --- including the quality and quantity of demonstrations, the physical capabilities of the robot, the policy architecture, and the pretraining regime used --- our experimental results strongly indicate that policy structure poses a significant performance bottleneck during behavior cloning. We hope that this work drives further exploration in the field into diffusion-based policies and highlights the importance of considering all aspects of the behavior cloning process beyond just the data used for policy training.
+
+
+\section{Acknowledgement}
+% This work was supported in part by  NSF Awards 2037101, 2132519, 2037101, and Toyota Research Institute. We would like to thank Google for the UR5 robot hardware. The views and conclusions contained herein are those of the authors and should not be interpreted as necessarily representing the official policies, either expressed or implied, of the sponsors.
+
+We'd like to thank Naveen Kuppuswamy, Hongkai Dai, Aykut Önol, Terry Suh, Tao Pang, Huy Ha, Samir Gadre, Kevin Zakka and Brandon Amos for their thoughtful discussions. We thank Jarod Wilson for 3D printing support and Huy Ha for photography and lighting advice. We thank Xiang Li for discovering the bug in our evaluation code on GitHub.
+
+% \todo{list the people we want to thank?}

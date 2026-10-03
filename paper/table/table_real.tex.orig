@@ -1,0 +1,13 @@
+\setlength\tabcolsep{1.2pt}
+\small
+\begin{tabular}{c|c|cc|cc|cccc}
+\toprule
+       & Human & \multicolumn{2}{c|}{IBC} & \multicolumn{2}{c|}{LSTM-GMM} & \multicolumn{4}{c}{Diffusion Policy}     \\
+       & Demo  & pos        & vel        & pos          & vel         & T-E2E & ImgNet & R3M & E2E         \\
+\midrule
+IoU      & 0.84  & 0.14       & 0.19       & 0.24         & 0.25        & 0.53  & 0.24     & 0.66  & \textbf{0.80} \\
+Succ\%   & 1.00  & 0.00       & 0.00       & 0.20         & 0.10        & 0.65  & 0.15     & 0.80  & \textbf{0.95} \\
+Dur. & 20.3  & 56.3       & 41.6       & 47.3         & 51.7        & 57.5  & 55.8     & 31.7  & \textbf{22.9} \\
+\bottomrule
+% https://docs.google.com/spreadsheets/d/1TftzQuEmERMvSM4EpzPl7GZ2mw5Ym024wV2TPW9N6R4/edit#gid=577907863
+\end{tabular}

@@ -1,0 +1,63 @@
+% \setlength\tabcolsep{ 4.4 pt}
+% \begin{tabular}{r|cc|cc|cc|cc|c|c}
+% \toprule
+
+%  & \multicolumn{2}{c|}{ Lift} & \multicolumn{2}{c|}{ Can} & \multicolumn{2}{c|}{ Square} & \multicolumn{2}{c|}{ Transport} & \multicolumn{1}{c|}{ ToolHang} & \multicolumn{1}{c}{ PushT} \\
+%  & ph & mh & ph & mh & ph & mh & ph & mh & ph & ph \\
+% \midrule
+% LSTM-GMM \cite{robomimic} & \small \textbf{1.00}/.960 & \small \textbf{1.00}/.926 & \small \textbf{1.00}/.912 & \small \textbf{1.00}/.806 & \small .955/.732 & \small .864/.588 & \small .758/.467 & \small .621/.199 & \small .667/.312 & \small .896/.832 \\
+% IBC  \cite{ibc} & \small .000/.000 & \small .000/.000 & \small .000/.000 & \small .000/.000 & \small .000/.000 & \small .000/.000 & \small .000/.000 & \small .000/.000 & \small .000/.000 & \small .000/.000 \\
+% BET & \small \textbf{1.00}/.961 & \small \textbf{1.00}/.992 & \small \textbf{1.00}/.892 & \small \textbf{1.00}/.897 & \small .758/.520 & \small .682/.427 & \small .379/.145 & \small .212/.064 & \small .576/.200 & \small .797/.713 \\
+% \midrule
+% DiffusionPolicy-C & \small \textbf{1.00}/.985 & \small \textbf{1.00}/.970 & \small \textbf{1.00}/.959 & \small \textbf{1.00}/\textbf{.961} & \small \textbf{1.00}/\textbf{.929} & \small \textbf{.970}/\textbf{.821} & \small .939/.821 & \small \textbf{.682}/\textbf{.455} & \small .515/.221 & \small .994/\textbf{.992} \\
+% DiffusionPolicy-T & \small \textbf{1.00}/\textbf{1.00} & \small \textbf{1.00}/\textbf{.999} & \small \textbf{1.00}/\textbf{.996} & \small \textbf{1.00}/.939 & \small \textbf{1.00}/.886 & \small .955/.812 & \small \textbf{1.00}/\textbf{.841} & \small .622/.351 & \small \textbf{1.00}/\textbf{.873} & \small \textbf{1.00}/.991 \\
+% \bottomrule
+% \end{tabular}
+
+% this version uses number from the original paper (Robomimic)
+% \setlength\tabcolsep{ 4.4 pt}
+% \begin{tabular}{r|cc|cc|cc|cc|c|c}
+% \toprule
+%  & \multicolumn{2}{c|}{Lift} & \multicolumn{2}{c|}{Can} & \multicolumn{2}{c|}{Square} & \multicolumn{2}{c|}{Transport} & \multicolumn{1}{c|}{ToolHang} & \multicolumn{1}{c}{PushT} \\
+%  & ph & mh & ph & mh & ph & mh & ph & mh & ph & ph \\
+% \midrule
+% LSTM-GMM \cite{robomimic} & \small \textbf{1.00}/0.96 & \small \textbf{1.00}/0.93 & \small \textbf{1.00}/0.91 & \small \textbf{1.00}/0.81 & \small 0.84/0.73 & \small 0.78/0.59 & \small 0.71/0.47 & \small 0.65/0.20 & \small 0.19/0.31 & \small 0.67/0.61 \\
+% IBC \cite{ibc} & \small 0.79/0.41 & \small 0.15/0.02 & \small 0.00/0.00 & \small 0.01/0.01 & \small 0.00/0.00 & \small 0.00/0.00 & \small 0.00/0.00 & \small 0.00/0.00 & \small 0.00/0.00 & \small 0.90/0.84 \\
+% BET \cite{bet} & \small \textbf{1.00}/0.96 & \small \textbf{1.00}/0.99 & \small \textbf{1.00}/0.89 & \small \textbf{1.00}/0.90 & \small 0.76/0.52 & \small 0.68/0.43 & \small 0.38/0.14 & \small 0.21/0.06 & \small 0.58/0.20 & \small 0.79/0.70 \\
+% \midrule
+% DiffusionPolicy-C & \small \textbf{1.00}/0.98 & \small \textbf{1.00}/0.97 & \small \textbf{1.00}/0.96 & \small \textbf{1.00}/\textbf{0.96} & \small \textbf{1.00}/\textbf{0.93} & \small \textbf{0.97}/\textbf{0.82} & \small 0.94/0.82 & \small \textbf{0.68}/\textbf{0.46} & \small 0.50/0.30 & \small 0.95/\textbf{0.91} \\
+% DiffusionPolicy-T & \small \textbf{1.00}/\textbf{1.00} & \small \textbf{1.00}/\textbf{1.00} & \small \textbf{1.00}/\textbf{1.00} & \small \textbf{1.00}/0.94 & \small \textbf{1.00}/0.89 & \small 0.95/0.81 & \small \textbf{1.00}/\textbf{0.84} & \small 0.62/0.35 & \small \textbf{1.00}/\textbf{0.87} & \small \textbf{0.95}/0.79 \\
+% \bottomrule
+% \end{tabular}
+
+
+% this version uses number we ran
+\setlength\tabcolsep{ 3 pt}
+\begin{tabular}{r|cc|cc|cc|cc|c|c}
+\toprule
+ & \multicolumn{2}{c|}{Lift} & \multicolumn{2}{c|}{Can} & \multicolumn{2}{c|}{Square} & \multicolumn{2}{c|}{Transport} & \multicolumn{1}{c|}{ToolHang} & \multicolumn{1}{c}{Push-T} \\
+ & ph & mh & ph & mh & ph & mh & ph & mh & ph & ph \\
+\midrule
+LSTM-GMM & \small \textbf{1.00}/0.96 & \small \textbf{1.00}/0.93 & \small \textbf{1.00}/0.91 & \small \textbf{1.00}/0.81 & \small 0.95/0.73 & \small 0.86/0.59 & \small 0.76/0.47 & \small 0.62/0.20 & \small 0.67/0.31 & \small 0.67/0.61 \\
+IBC & \small 0.79/0.41 & \small 0.15/0.02 & \small 0.00/0.00 & \small 0.01/0.01 & \small 0.00/0.00 & \small 0.00/0.00 & \small 0.00/0.00 & \small 0.00/0.00 & \small 0.00/0.00 & \small 0.90/0.84 \\
+BET & \small \textbf{1.00}/0.96 & \small \textbf{1.00}/0.99 & \small \textbf{1.00}/0.89 & \small \textbf{1.00}/0.90 & \small 0.76/0.52 & \small 0.68/0.43 & \small 0.38/0.14 & \small 0.21/0.06 & \small 0.58/0.20 & \small 0.79/0.70 \\
+\midrule
+DiffusionPolicy-C & \small \textbf{1.00}/0.98 & \small \textbf{1.00}/0.97 & \small \textbf{1.00}/0.96 & \small \textbf{1.00}/\textbf{0.96} & \small \textbf{1.00}/\textbf{0.93} & \small \textbf{0.97}/\textbf{0.82} & \small 0.94/0.82 & \small \textbf{0.68}/\textbf{0.46} & \small 0.50/0.30 & \small 0.95/\textbf{0.91} \\
+DiffusionPolicy-T & \small \textbf{1.00}/\textbf{1.00} & \small \textbf{1.00}/\textbf{1.00} & \small \textbf{1.00}/\textbf{1.00} & \small \textbf{1.00}/0.94 & \small \textbf{1.00}/0.89 & \small 0.95/0.81 & \small \textbf{1.00}/\textbf{0.84} & \small 0.62/0.35 & \small \textbf{1.00}/\textbf{0.87} & \small \textbf{0.95}/0.79 \\
+\bottomrule
+\end{tabular}
+
+% Feb 28 update, reran diffusion cnn with obs global cond
+% \setlength\tabcolsep{ 4.4 pt}
+% \begin{tabular}{r|cc|cc|cc|cc|c|c}
+% \toprule
+%  & \multicolumn{2}{c|}{Lift} & \multicolumn{2}{c|}{Can} & \multicolumn{2}{c|}{Square} & \multicolumn{2}{c|}{Transport} & \multicolumn{1}{c|}{ToolHang} & \multicolumn{1}{c}{PushT} \\
+%  & ph & mh & ph & mh & ph & mh & ph & mh & ph & ph \\
+% \midrule
+% LSTM-GMM \cite{robomimic} & \small \textbf{1.00}/0.96 & \small \textbf{1.00}/0.93 & \small \textbf{1.00}/0.91 & \small \textbf{1.00}/0.81 & \small 0.84/0.73 & \small 0.78/0.59 & \small 0.71/0.47 & \small 0.65/0.20 & \small 0.19/0.31 & \small 0.67/0.61 \\
+% IBC \cite{ibc} & \small 0.79/0.41 & \small 0.15/0.02 & \small 0.00/0.00 & \small 0.01/0.01 & \small 0.00/0.00 & \small 0.00/0.00 & \small 0.00/0.00 & \small 0.00/0.00 & \small 0.00/0.00 & \small 0.90/0.84 \\
+% BET & \small \textbf{1.00}/0.96 & \small \textbf{1.00}/0.99 & \small \textbf{1.00}/0.89 & \small \textbf{1.00}/0.90 & \small 0.76/0.52 & \small 0.68/0.43 & \small 0.38/0.14 & \small 0.21/0.06 & \small 0.58/0.20 & \small 0.79/0.70 \\
+% DiffusionPolicy-C & \small \textbf{1.00}/\textbf{1.00} & \small \textbf{1.00}/0.98 & \small \textbf{1.00}/\textbf{1.00} & \small \textbf{1.00}/\textbf{0.99} & \small \textbf{1.00}/\textbf{0.95} & \small \textbf{0.98}/\textbf{0.86} & \small 0.95/\textbf{0.85} & \small \textbf{0.77}/\textbf{0.60} & \small 0.86/0.52 & \small 0.95/\textbf{0.91} \\
+% DiffusionPolicy-T & \small \textbf{1.00}/\textbf{1.00} & \small \textbf{1.00}/\textbf{1.00} & \small \textbf{1.00}/1.00 & \small \textbf{1.00}/0.94 & \small \textbf{1.00}/0.89 & \small 0.95/0.81 & \small \textbf{1.00}/0.84 & \small 0.62/0.35 & \small \textbf{1.00}/\textbf{0.87} & \small \textbf{0.95}/0.79 \\
+% \bottomrule
+% \end{tabular}

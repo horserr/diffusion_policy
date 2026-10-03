@@ -1,0 +1,291 @@
+\begin{thebibliography}{70}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{DOI:\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{DOI:\discretionary{}{}{}\begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[{Ajay et~al.(2022)Ajay, Du, Gupta, Tenenbaum, Jaakkola and Agrawal}]{ajay2022conditional}
+Ajay A, Du Y, Gupta A, Tenenbaum J, Jaakkola T and Agrawal P (2022) Is conditional generative modeling all you need for decision-making?
+\newblock \emph{arXiv preprint arXiv:2211.15657} .
+
+\bibitem[{Argall et~al.(2009)Argall, Chernova, Veloso and Browning}]{argall2009survey}
+Argall BD, Chernova S, Veloso M and Browning B (2009) A survey of robot learning from demonstration.
+\newblock \emph{Robotics and autonomous systems} 57(5): 469--483.
+
+\bibitem[{Atkeson and Schaal(1997)}]{atkeson1997robot}
+Atkeson CG and Schaal S (1997) Robot learning from demonstration.
+\newblock In: \emph{ICML}, volume~97. pp. 12--20.
+
+\bibitem[{Avigal et~al.(2022)Avigal, Berscheid, Asfour, Kr{\"o}ger and Goldberg}]{avigal2022speedfolding}
+Avigal Y, Berscheid L, Asfour T, Kr{\"o}ger T and Goldberg K (2022) Speedfolding: Learning efficient bimanual folding of garments.
+\newblock In: \emph{2022 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}. IEEE, pp. 1--8.
+
+\bibitem[{Bishop(1994)}]{bishop1994mixture}
+Bishop CM (1994) \emph{Mixture density networks}.
+\newblock Aston University.
+
+\bibitem[{Bojarski et~al.(2016)Bojarski, Del~Testa, Dworakowski, Firner, Flepp, Goyal, Jackel, Monfort, Muller, Zhang et~al.}]{bojarski2016end}
+Bojarski M, Del~Testa D, Dworakowski D, Firner B, Flepp B, Goyal P, Jackel LD, Monfort M, Muller U, Zhang J et~al. (2016) End to end learning for self-driving cars.
+\newblock \emph{arXiv preprint arXiv:1604.07316} .
+
+\bibitem[{Chen(2023)}]{chen2023importance}
+Chen T (2023) On the importance of noise scheduling for diffusion models.
+\newblock \emph{arXiv preprint arXiv:2301.10972} .
+
+\bibitem[{Chi et~al.(2023)Chi, Feng, Du, Xu, Cousineau, Burchfiel and Song}]{chi2023diffusionpolicy}
+Chi C, Feng S, Du Y, Xu Z, Cousineau E, Burchfiel B and Song S (2023) Diffusion policy: Visuomotor policy learning via action diffusion.
+\newblock In: \emph{Proceedings of Robotics: Science and Systems (RSS)}.
+
+\bibitem[{Dai et~al.(2019)Dai, Liu, Dai, He, Gretton, Song and Schuurmans}]{dai2019exponential}
+Dai B, Liu Z, Dai H, He N, Gretton A, Song L and Schuurmans D (2019) Exponential family estimation via adversarial dynamics embedding.
+\newblock \emph{Advances in Neural Information Processing Systems} 32.
+
+\bibitem[{Deng et~al.(2009)Deng, Dong, Socher, Li, Li and Fei-Fei}]{deng2009imagenet}
+Deng J, Dong W, Socher R, Li LJ, Li K and Fei-Fei L (2009) Imagenet: A large-scale hierarchical image database.
+\newblock In: \emph{2009 IEEE conference on computer vision and pattern recognition}. Ieee, pp. 248--255.
+
+\bibitem[{Dosovitskiy et~al.(2020)Dosovitskiy, Beyer, Kolesnikov, Weissenborn, Zhai, Unterthiner, Dehghani, Minderer, Heigold, Gelly et~al.}]{dosovitskiy2020image}
+Dosovitskiy A, Beyer L, Kolesnikov A, Weissenborn D, Zhai X, Unterthiner T, Dehghani M, Minderer M, Heigold G, Gelly S et~al. (2020) An image is worth 16x16 words: Transformers for image recognition at scale.
+\newblock \emph{arXiv preprint arXiv:2010.11929} .
+
+\bibitem[{Du et~al.(2020)Du, Li, Tenenbaum and Mordatch}]{du2020improved}
+Du Y, Li S, Tenenbaum J and Mordatch I (2020) Improved contrastive divergence training of energy based models.
+\newblock \emph{arXiv preprint arXiv:2012.01316} .
+
+\bibitem[{Du and Mordatch(2019)}]{du2019implicit}
+Du Y and Mordatch I (2019) Implicit generation and generalization in energy-based models.
+\newblock \emph{arXiv preprint arXiv:1903.08689} .
+
+\bibitem[{Florence et~al.(2021)Florence, Lynch, Zeng, Ramirez, Wahid, Downs, Wong, Lee, Mordatch and Tompson}]{ibc}
+Florence P, Lynch C, Zeng A, Ramirez OA, Wahid A, Downs L, Wong A, Lee J, Mordatch I and Tompson J (2021) Implicit behavioral cloning.
+\newblock In: \emph{5th Annual Conference on Robot Learning}.
+
+\bibitem[{Florence et~al.(2019)Florence, Manuelli and Tedrake}]{florence2019self}
+Florence P, Manuelli L and Tedrake R (2019) Self-supervised correspondence in visuomotor policy learning.
+\newblock \emph{IEEE Robotics and Automation Letters} 5(2): 492--499.
+
+\bibitem[{Grathwohl et~al.(2020)Grathwohl, Wang, Jacobsen, Duvenaud and Zemel}]{grathwohl2020stein}
+Grathwohl W, Wang KC, Jacobsen JH, Duvenaud D and Zemel R (2020) Learning the stein discrepancy for training and evaluating energy-based models without sampling.
+\newblock In: \emph{International Conference on Machine Learning}.
+
+\bibitem[{Gupta et~al.(2019)Gupta, Kumar, Lynch, Levine and Hausman}]{gupta2019relay}
+Gupta A, Kumar V, Lynch C, Levine S and Hausman K (2019) Relay policy learning: Solving long-horizon tasks via imitation and reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:1910.11956} .
+
+\bibitem[{Hansen-Estruch et~al.(2023)Hansen-Estruch, Kostrikov, Janner, Kuba and Levine}]{hansen2023idql}
+Hansen-Estruch P, Kostrikov I, Janner M, Kuba JG and Levine S (2023) Idql: Implicit q-learning as an actor-critic method with diffusion policies.
+\newblock \emph{arXiv preprint arXiv:2304.10573} .
+
+\bibitem[{He et~al.(2020)He, Fan, Wu, Xie and Girshick}]{he2020moco}
+He K, Fan H, Wu Y, Xie S and Girshick R (2020) Momentum contrast for unsupervised visual representation learning.
+\newblock In: \emph{Proceedings of the IEEE/CVF conference on computer vision and pattern recognition}. pp. 9729--9738.
+
+\bibitem[{He et~al.(2016)He, Zhang, Ren and Sun}]{resnet}
+He K, Zhang X, Ren S and Sun J (2016) Deep residual learning for image recognition.
+\newblock In: \emph{Proceedings of the IEEE conference on computer vision and pattern recognition}. pp. 770--778.
+
+\bibitem[{Ho et~al.(2020)Ho, Jain and Abbeel}]{ho2020denoising}
+Ho J, Jain A and Abbeel P (2020) Denoising diffusion probabilistic models.
+\newblock \emph{arXiv preprint arXiv:2006.11239} .
+
+\bibitem[{Huang et~al.(2023)Huang, Wang, Li, Jia, Liu, Zhu, Liang and Zhu}]{huang2023diffusion}
+Huang S, Wang Z, Li P, Jia B, Liu T, Zhu Y, Liang W and Zhu SC (2023) Diffusion-based generation, optimization, and planning in 3d scenes.
+\newblock \emph{arXiv preprint arXiv:2301.06015} .
+
+\bibitem[{Janner et~al.(2022{\natexlab{a}})Janner, Du, Tenenbaum and Levine}]{janner2022diffuser}
+Janner M, Du Y, Tenenbaum J and Levine S (2022{\natexlab{a}}) Planning with diffusion for flexible behavior synthesis.
+\newblock In: \emph{International Conference on Machine Learning}.
+
+\bibitem[{Janner et~al.(2022{\natexlab{b}})Janner, Du, Tenenbaum and Levine}]{pmlr-v162-janner22a}
+Janner M, Du Y, Tenenbaum J and Levine S (2022{\natexlab{b}}) Planning with diffusion for flexible behavior synthesis.
+\newblock In: Chaudhuri K, Jegelka S, Song L, Szepesvari C, Niu G and Sabato S (eds.) \emph{Proceedings of the 39th International Conference on Machine Learning}, Proceedings of Machine Learning Research. PMLR.
+
+\bibitem[{Jarrett et~al.(2020)Jarrett, Bica and van~der Schaar}]{jarrett2020strictly}
+Jarrett D, Bica I and van~der Schaar M (2020) Strictly batch imitation learning by energy-based distribution matching.
+\newblock \emph{Advances in Neural Information Processing Systems} 33: 7354--7365.
+
+\bibitem[{Karras et~al.(2022)Karras, Aittala, Aila and Laine}]{karras2022elucidating}
+Karras T, Aittala M, Aila T and Laine S (2022) Elucidating the design space of diffusion-based generative models.
+\newblock \emph{arXiv preprint arXiv:2206.00364} .
+
+\bibitem[{Khatib(1987)}]{khatib1987osc}
+Khatib O (1987) A unified approach for motion and force control of robot manipulators: {The} operational space formulation.
+\newblock \emph{IEEE Journal on Robotics and Automation} 3(1): 43--53.
+\newblock \doi{10.1109/JRA.1987.1087068}.
+\newblock Conference Name: IEEE Journal on Robotics and Automation.
+
+\bibitem[{LeCun et~al.(2006)LeCun, Chopra, Hadsell, Huang and et~al.}]{lecun06atutorial}
+LeCun Y, Chopra S, Hadsell R, Huang FJ and et~al (2006) A tutorial on energy-based learning.
+\newblock In: \emph{Predicting Structured Data}. MIT Press.
+
+\bibitem[{Liu et~al.(2020)Liu, Liu, Gao, Chen and Han}]{liu2020understanding}
+Liu L, Liu X, Gao J, Chen W and Han J (2020) Understanding the difficulty of training transformers.
+\newblock \emph{arXiv preprint arXiv:2004.08249} .
+
+\bibitem[{Liu et~al.(2022)Liu, Li, Du, Torralba and Tenenbaum}]{liu2022compositional}
+Liu N, Li S, Du Y, Torralba A and Tenenbaum JB (2022) Compositional visual generation with composable diffusion models.
+\newblock \emph{arXiv preprint arXiv:2206.01714} .
+
+\bibitem[{Mandlekar et~al.(2020{\natexlab{a}})Mandlekar, Ramos, Boots, Savarese, Fei-Fei, Garg and Fox}]{mandlekar2020iris}
+Mandlekar A, Ramos F, Boots B, Savarese S, Fei-Fei L, Garg A and Fox D (2020{\natexlab{a}}) Iris: Implicit reinforcement without interaction at scale for learning control from offline robot manipulation data.
+\newblock In: \emph{2020 IEEE International Conference on Robotics and Automation (ICRA)}. IEEE.
+
+\bibitem[{Mandlekar et~al.(2020{\natexlab{b}})Mandlekar, Xu, Mart{\'\i}n-Mart{\'\i}n, Savarese and Fei-Fei}]{mandlekar2020learning}
+Mandlekar A, Xu D, Mart{\'\i}n-Mart{\'\i}n R, Savarese S and Fei-Fei L (2020{\natexlab{b}}) Learning to generalize across long-horizon tasks from human demonstrations.
+\newblock \emph{arXiv preprint arXiv:2003.06085} .
+
+\bibitem[{Mandlekar et~al.(2021)Mandlekar, Xu, Wong, Nasiriany, Wang, Kulkarni, Fei-Fei, Savarese, Zhu and Mart{\'\i}n-Mart{\'\i}n}]{robomimic}
+Mandlekar A, Xu D, Wong J, Nasiriany S, Wang C, Kulkarni R, Fei-Fei L, Savarese S, Zhu Y and Mart{\'\i}n-Mart{\'\i}n R (2021) What matters in learning from offline human demonstrations for robot manipulation.
+\newblock In: \emph{5th Annual Conference on Robot Learning}.
+
+\bibitem[{Mayne and Michalska(1988)}]{mayne1988receding}
+Mayne DQ and Michalska H (1988) Receding horizon control of nonlinear systems.
+\newblock In: \emph{Proceedings of the 27th IEEE Conference on Decision and Control}. IEEE, pp. 464--465.
+
+\bibitem[{Nair et~al.(2022)Nair, Rajeswaran, Kumar, Finn and Gupta}]{nair2022r3m}
+Nair S, Rajeswaran A, Kumar V, Finn C and Gupta A (2022) R3m: A universal visual representation for robot manipulation.
+\newblock In: \emph{6th Annual Conference on Robot Learning}.
+
+\bibitem[{Neal et~al.(2011)}]{neal2011mcmc}
+Neal RM et~al. (2011) Mcmc using hamiltonian dynamics.
+\newblock \emph{Handbook of markov chain monte carlo} .
+
+\bibitem[{Nichol and Dhariwal(2021)}]{nichol2021improved}
+Nichol AQ and Dhariwal P (2021) Improved denoising diffusion probabilistic models.
+\newblock In: \emph{International Conference on Machine Learning}. PMLR, pp. 8162--8171.
+
+\bibitem[{Pearce et~al.(2023)Pearce, Rashid, Kanervisto, Bignell, Sun, Georgescu, Macua, Tan, Momennejad, Hofmann et~al.}]{pearce2023imitating}
+Pearce T, Rashid T, Kanervisto A, Bignell D, Sun M, Georgescu R, Macua SV, Tan SZ, Momennejad I, Hofmann K et~al. (2023) Imitating human behaviour with diffusion models.
+\newblock \emph{arXiv preprint arXiv:2301.10677} .
+
+\bibitem[{Perez et~al.(2018)Perez, Strub, De~Vries, Dumoulin and Courville}]{perez2018film}
+Perez E, Strub F, De~Vries H, Dumoulin V and Courville A (2018) Film: Visual reasoning with a general conditioning layer.
+\newblock In: \emph{Proceedings of the AAAI Conference on Artificial Intelligence}.
+
+\bibitem[{Pomerleau(1988)}]{pomerleau1988alvinn}
+Pomerleau DA (1988) Alvinn: An autonomous land vehicle in a neural network.
+\newblock \emph{Advances in neural information processing systems} 1.
+
+\bibitem[{Radford et~al.(2021)Radford, Kim, Hallacy, Ramesh, Goh, Agarwal, Sastry, Askell, Mishkin, Clark et~al.}]{radford2021learning}
+Radford A, Kim JW, Hallacy C, Ramesh A, Goh G, Agarwal S, Sastry G, Askell A, Mishkin P, Clark J et~al. (2021) Learning transferable visual models from natural language supervision.
+\newblock In: \emph{International conference on machine learning}. PMLR, pp. 8748--8763.
+
+\bibitem[{Rahmatizadeh et~al.(2018)Rahmatizadeh, Abolghasemi, B{\"o}l{\"o}ni and Levine}]{rahmatizadeh2018vision}
+Rahmatizadeh R, Abolghasemi P, B{\"o}l{\"o}ni L and Levine S (2018) Vision-based multi-task manipulation for inexpensive robots using end-to-end learning from demonstration.
+\newblock In: \emph{2018 IEEE international conference on robotics and automation (ICRA)}. IEEE, pp. 3758--3765.
+
+\bibitem[{Ravichandar et~al.(2020)Ravichandar, Polydoros, Chernova and Billard}]{ravichandar2020recent}
+Ravichandar H, Polydoros AS, Chernova S and Billard A (2020) Recent advances in robot learning from demonstration.
+\newblock \emph{Annual review of control, robotics, and autonomous systems} 3: 297--330.
+
+\bibitem[{Reuss et~al.(2023)Reuss, Li, Jia and Lioutikov}]{reuss2023goal}
+Reuss M, Li M, Jia X and Lioutikov R (2023) Goal-conditioned imitation learning using score-based diffusion policies.
+\newblock In: \emph{Proceedings of Robotics: Science and Systems (RSS)}.
+
+\bibitem[{Ridnik et~al.(2021)Ridnik, Ben-Baruch, Noy and Zelnik-Manor}]{ridnik2021imagenet21k}
+Ridnik T, Ben-Baruch E, Noy A and Zelnik-Manor L (2021) Imagenet-21k pretraining for the masses.
+
+\bibitem[{Ronneberger et~al.(2015)Ronneberger, Fischer and Brox}]{ronneberger2015u}
+Ronneberger O, Fischer P and Brox T (2015) U-net: Convolutional networks for biomedical image segmentation.
+\newblock In: \emph{Medical Image Computing and Computer-Assisted Intervention--MICCAI 2015: 18th International Conference, Munich, Germany, October 5-9, 2015, Proceedings, Part III 18}. Springer, pp. 234--241.
+
+\bibitem[{Ross et~al.(2011)Ross, Gordon and Bagnell}]{ross2011reduction}
+Ross S, Gordon G and Bagnell D (2011) A reduction of imitation learning and structured prediction to no-regret online learning.
+\newblock In: \emph{Proceedings of the fourteenth international conference on artificial intelligence and statistics}. JMLR Workshop and Conference Proceedings, pp. 627--635.
+
+\bibitem[{Shafiullah et~al.(2022)Shafiullah, Cui, Altanzaya and Pinto}]{bet}
+Shafiullah NMM, Cui ZJ, Altanzaya A and Pinto L (2022) Behavior transformers: Cloning \$k\$ modes with one stone.
+\newblock In: Oh AH, Agarwal A, Belgrave D and Cho K (eds.) \emph{Advances in Neural Information Processing Systems}.
+
+\bibitem[{Sharma et~al.(2018)Sharma, Mohan, Pinto and Gupta}]{sharma2018multiple}
+Sharma P, Mohan L, Pinto L and Gupta A (2018) Multiple interactions made easy (mime): Large scale demonstrations data for imitation.
+\newblock In: \emph{Conference on robot learning}. PMLR.
+
+\bibitem[{Siciliano et~al.(2008)Siciliano, Khatib and Kr{\"o}ger}]{siciliano2008springer}
+Siciliano B, Khatib O and Kr{\"o}ger T (2008) \emph{Springer handbook of robotics}, volume 200.
+\newblock Springer.
+
+\bibitem[{Sohl-Dickstein et~al.(2015)Sohl-Dickstein, Weiss, Maheswaranathan and Ganguli}]{sohldickstein2015nonequilibrium}
+Sohl-Dickstein J, Weiss E, Maheswaranathan N and Ganguli S (2015) Deep unsupervised learning using nonequilibrium thermodynamics.
+\newblock In: \emph{International Conference on Machine Learning}.
+
+\bibitem[{Song et~al.(2021)Song, Meng and Ermon}]{song2021ddim}
+Song J, Meng C and Ermon S (2021) Denoising diffusion implicit models.
+\newblock In: \emph{International Conference on Learning Representations}.
+
+\bibitem[{Song et~al.(2023)Song, Dhariwal, Chen and Sutskever}]{song2023consistency}
+Song Y, Dhariwal P, Chen M and Sutskever I (2023) Consistency models.
+\newblock \emph{arXiv preprint arXiv:2303.01469} .
+
+\bibitem[{Song and Ermon(2019)}]{song2019score}
+Song Y and Ermon S (2019) Generative modeling by estimating gradients of the data distribution.
+\newblock \emph{Advances in neural information processing systems} 32.
+
+\bibitem[{Subramanian and Mahajan(2019)}]{subramanian2019approximate}
+Subramanian J and Mahajan A (2019) Approximate information state for partially observed systems.
+\newblock In: \emph{2019 IEEE 58th Conference on Decision and Control (CDC)}. IEEE, pp. 1629--1636.
+
+\bibitem[{Ta et~al.(2022)Ta, Cousineau, Zhao and Feng}]{ta2022conditional}
+Ta DN, Cousineau E, Zhao H and Feng S (2022) Conditional energy-based models for implicit policies: The gap between theory and practice.
+\newblock \emph{arXiv preprint arXiv:2207.05824} .
+
+\bibitem[{Tancik et~al.(2020)Tancik, Srinivasan, Mildenhall, Fridovich-Keil, Raghavan, Singhal, Ramamoorthi, Barron and Ng}]{tancik2020fourier}
+Tancik M, Srinivasan P, Mildenhall B, Fridovich-Keil S, Raghavan N, Singhal U, Ramamoorthi R, Barron J and Ng R (2020) Fourier features let networks learn high frequency functions in low dimensional domains.
+\newblock \emph{Advances in Neural Information Processing Systems} 33: 7537--7547.
+
+\bibitem[{Toyer et~al.(2020)Toyer, Shah, Critch and Russell}]{toyer2020magical}
+Toyer S, Shah R, Critch A and Russell S (2020) The magical benchmark for robust imitation.
+\newblock \emph{Advances in Neural Information Processing Systems} 33: 18284--18295.
+
+\bibitem[{Urain et~al.(2022)Urain, Funk, Chalvatzaki and Peters}]{urain2022se}
+Urain J, Funk N, Chalvatzaki G and Peters J (2022) Se (3)-diffusionfields: Learning cost functions for joint grasp and motion optimization through diffusion.
+\newblock \emph{arXiv preprint arXiv:2209.03855} .
+
+\bibitem[{Vaswani et~al.(2017)Vaswani, Shazeer, Parmar, Uszkoreit, Jones, Gomez, Kaiser and Polosukhin}]{vaswani2017attention}
+Vaswani A, Shazeer N, Parmar N, Uszkoreit J, Jones L, Gomez AN, Kaiser {\L} and Polosukhin I (2017) Attention is all you need.
+\newblock \emph{Advances in neural information processing systems} 30.
+
+\bibitem[{Wang et~al.(2022)Wang, Hunt and Zhou}]{wang2022diffusion}
+Wang Z, Hunt JJ and Zhou M (2022) Diffusion policies as an expressive policy class for offline reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2208.06193} .
+
+\bibitem[{Wang et~al.(2023)Wang, Hunt and Zhou}]{wang2023diffusion}
+Wang Z, Hunt JJ and Zhou M (2023) Diffusion policies as an expressive policy class for offline reinforcement learning.
+\newblock In: \emph{The Eleventh International Conference on Learning Representations}.
+\newblock \urlprefix\url{https://openreview.net/forum?id=AHvFDPi-FA}.
+
+\bibitem[{Welling and Teh(2011)}]{welling2011bayesian}
+Welling M and Teh YW (2011) Bayesian learning via stochastic gradient langevin dynamics.
+\newblock In: \emph{Proceedings of the 28th international conference on machine learning (ICML-11)}. pp. 681--688.
+
+\bibitem[{Wu et~al.(2020)Wu, Sun, Zeng, Song, Lee, Rusinkiewicz and Funkhouser}]{wu2020spatial}
+Wu J, Sun X, Zeng A, Song S, Lee J, Rusinkiewicz S and Funkhouser T (2020) Spatial action maps for mobile manipulation.
+\newblock In: \emph{Proceedings of Robotics: Science and Systems (RSS)}.
+
+\bibitem[{Wu and He(2018)}]{groupnorm}
+Wu Y and He K (2018) Group normalization.
+\newblock In: \emph{Proceedings of the European conference on computer vision (ECCV)}. pp. 3--19.
+
+\bibitem[{Yang et~al.(2022)Yang, Zhang, Settle, Rai, Antonova and Bohg}]{yang2022periodic}
+Yang J, Zhang J, Settle C, Rai A, Antonova R and Bohg J (2022) Learning periodic tasks from human demonstrations.
+\newblock In: \emph{2022 International Conference on Robotics and Automation (ICRA)}. IEEE, pp. 8658--8665.
+
+\bibitem[{Zeng et~al.(2021)Zeng, Florence, Tompson, Welker, Chien, Attarian, Armstrong, Krasin, Duong, Sindhwani et~al.}]{zeng2021transporter}
+Zeng A, Florence P, Tompson J, Welker S, Chien J, Attarian M, Armstrong T, Krasin I, Duong D, Sindhwani V et~al. (2021) Transporter networks: Rearranging the visual world for robotic manipulation.
+\newblock In: \emph{Conference on Robot Learning}. PMLR, pp. 726--747.
+
+\bibitem[{Zhang et~al.(2020)Zhang, McAllister, Calandra, Gal and Levine}]{zhang2020learning}
+Zhang A, McAllister RT, Calandra R, Gal Y and Levine S (2020) Learning invariant representations for reinforcement learning without reconstruction.
+\newblock In: \emph{International Conference on Learning Representations}.
+
+\bibitem[{Zhang et~al.(2018)Zhang, McCarthy, Jow, Lee, Chen, Goldberg and Abbeel}]{zhang2018deep}
+Zhang T, McCarthy Z, Jow O, Lee D, Chen X, Goldberg K and Abbeel P (2018) Deep imitation learning for complex manipulation tasks from virtual reality teleoperation.
+\newblock In: \emph{2018 IEEE International Conference on Robotics and Automation (ICRA)}. IEEE, pp. 5628--5635.
+
+\bibitem[{Zhou et~al.(2019)Zhou, Barnes, Lu, Yang and Li}]{zhou2019continuity}
+Zhou Y, Barnes C, Lu J, Yang J and Li H (2019) On the continuity of rotation representations in neural networks.
+\newblock In: \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}. pp. 5745--5753.
+
+\end{thebibliography}

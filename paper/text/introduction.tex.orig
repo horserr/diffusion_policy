@@ -1,0 +1,55 @@
+
+
+
+\section{Introduction}
+% Policy learning, in its simplest form, can be treated as a supervised regression task with actions learned via a regression loss.
+Policy learning from demonstration, in its simplest form, can be formulated as the supervised regression task of learning to map observations to actions.
+In practice however, the unique nature of predicting robot actions --- such as the existence of multimodal distributions, sequential correlation, and the requirement of high precision ---  makes this task distinct and challenging compared to other supervised learning problems.   
+
+%Behavior cloning is a promising method for creating complex and highly reactive robot behaviors. This approach formulates behavior learning as a supervised learning problem where a policy is conditioned on observations and taught to regress expert-demonstrated actions. Despite this simple problem formulation, the unique nature of predicting robot actions --- such as the presence of multi-modality, sequential correlation, and the requirement of high precision --- makes this task distinct and challenging compared to other supervised learning problems and straightforwardly applying existing approaches from image or video-based regression have shown poor results \cite{robomimic}.  
+
+%input representations \todo{needs citations} -- such as explicit state, multiple viewpoints, temporal history, and frozen pretrained feature extractors --
+Prior work attempts to address this challenge by exploring different \textit{action representations} (Fig \ref{fig:policy_rep} a) -- using mixtures of Gaussians \cite{robomimic}, categorical representations of quantized actions \cite{bet},
+or by switching the \textit{the policy representation} (Fig \ref{fig:policy_rep} b) -- from  explicit to implicit to better capture multi-modal distributions \cite{ibc,wu2020spatial}.
+
+In this work, we seek to address this challenge by introducing a new form of robot visuomotor policy that generates behavior via a ``conditional denoising diffusion process \cite{ho2020denoising} on robot action space'', \textbf{Diffusion Policy}. In this formulation, instead of directly outputting an action, the policy infers the action-score gradient, conditioned on visual observations, for $K$ denoising iterations (Fig. \ref{fig:policy_rep} c). 
+This formulation allows robot policies to inherit several key properties from diffusion models -- significantly improving performance.
+\begin{itemize} %[leftmargin=3mm]
+    
+    \item \textbf{Expressing multimodal action distributions.} 
+     By learning the gradient of the action score function \cite{song2019score} and performing Stochastic Langevin Dynamics sampling on this gradient field, Diffusion policy can express arbitrary normalizable distributions \cite{neal2011mcmc}, which includes multimodal action distributions, a well-known challenge for policy learning.
+     %This capability also enables better compatibility with positional action commands, which is typically multimodal but necessary for high-precision tasks. 
+
+    \item \textbf{High-dimensional output space.} As demonstrated by their impressive image generation results, diffusion models have shown excellent scalability to high-dimension output spaces. This property allows the policy to jointly infer a \textit{sequence} of future actions instead of \textit{single-step} actions, which is critical for encouraging temporal action consistency and avoiding myopic planning.  
+    
+    \item \textbf{Stable training.} 
+    Training energy-based policies often requires negative sampling to estimate an intractable normalization constant, which is known to cause training instability \cite{du2020improved,ibc}. Diffusion Policy bypasses this requirement by learning the gradient of the energy function and thereby achieves stable training while maintaining distributional expressivity. %This training stability is crucial when selecting the optimal checkpoint requires expensive physical robot executions.
+
+    %\item Data efficiency(?) Is it true? Not sure why 
+\end{itemize}
+
+Our \textbf{primary contribution} is to bring the above advantages to the field of robotics and demonstrate their effectiveness on complex real-world robot manipulation tasks. To successfully employ diffusion models for visuomotor policy learning, we present the following technical contributions that enhance the performance of Diffusion Policy and unlock its full potential on physical robots:
+\begin{itemize} %[leftmargin=3mm]
+    \item \textbf{Closed-loop action sequences.} We combine the policy's capability to predict high-dimensional action sequences with \textit{receding-horizon control} to achieve robust execution. This design allows the policy to continuously re-plan its action in a closed-loop manner while maintaining temporal action consistency -- achieving a balance between long-horizon planning and responsiveness. 
+
+    %\item We introduced end-to-end trained real-time vision input to diffusion policy. By treating observations as conditioning instead of being part of the joint data distribution to be modeled by DDPM, diffusion policy executes the vision encoder once regardless of the number of denoising iterations, drastically reducing required computation power and inference latency, enabling the use of DDPM in real-time visuomotor policies.
+
+    \item \textbf{Visual conditioning.} We introduce a vision-conditioned diffusion policy, where the visual observations are treated as conditioning instead of a part of the joint data distribution.  In this formulation, the policy extracts the visual representation once regardless of the denoising iterations, which drastically reduces the computation and enables real-time action inference. 
+
+
+    \item \textbf{Time-series diffusion transformer.} We propose a new transformer-based diffusion network  that minimizes the over-smoothing effects of typical CNN-based models and achieves state-of-the-art performance on tasks that require high-frequency action changes and velocity control. 
+\end{itemize}
+
+We systematically evaluate Diffusion Policy across \textbf{15} tasks from \textbf{4} different benchmarks \cite{ibc, gupta2019relay, robomimic, bet} under the behavior cloning formulation. The evaluation includes both simulated and real-world environments, 2DoF to 6DoF actions, single- and multi-task benchmarks, and fully- and under-actuated systems, with rigid and fluid objects, using demonstration data collected by single and multiple users.  
+
+Empirically, we find \textbf{consistent} performance boost across all benchmarks with an average improvement of 46.9\%, providing strong evidence of the effectiveness of Diffusion Policy. We also provide detailed analysis to carefully examine the characteristics of the proposed algorithm and the impacts of the key design decisions. 
+
+This work is an extended version of the conference paper \cite{chi2023diffusionpolicy}.  We expand the content of this paper in the following ways: 
+\begin{itemize} %[leftmargin=3mm]
+\item Include a new discussion section on the connections between diffusion policy and control theory. See Sec. \ref{sec:control}.   
+\item Include additional ablation studies in simulation on alternative network architecture design and different pretraining and finetuning paradigms, Sec. \ref{sec:arch_ablation}.  
+\item Extend the real-world experimental results with three bimanual manipulation tasks including  Egg Beater, Mat Unrolling, and Shirt Folding in  Sec. \ref{sec:eval_bimanual}. 
+\end{itemize}
+
+The code, data, and training details are publicly available for reproducing our results \url{diffusion-policy.cs.columbia.edu}.  
+%\textit{\textbf{Please refer to the supplementary material for the robot videos.}}

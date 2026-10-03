@@ -1,0 +1,23 @@
+\setlength\tabcolsep{3 pt}
+\small
+\begin{tabular}{l|llllllllllll}
+\toprule
+           % & Ctrl & To & Ta & Tp & ImgRes    & CropRes   & \#D-params & \#V-params & Lr   & WDecay & D-Iters Train & D-Iters Eval \\
+\textbf{H-Param} & \textbf{Ctrl} & \textbf{To} & \textbf{Ta} & \textbf{Tp} & \textbf{ImgRes} & \textbf{CropRes} & \textbf{\#D-Params} & \textbf{\#V-Params} & \textbf{Lr} & \textbf{WDecay} & \textbf{D-Iters Train} & \textbf{D-Iters Eval} \\
+
+\midrule
+Lift       & Pos  & 2  & 8  & 16 & 2x84x84   & 2x76x76   & 256      & 22       & 1e-4 & 1e-6   & 100           & 100          \\
+Can        & Pos  & 2  & 8  & 16 & 2x84x84   & 2x76x76   & 256      & 22       & 1e-4 & 1e-6   & 100           & 100          \\
+Square     & Pos  & 2  & 8  & 16 & 2x84x84   & 2x76x76   & 256      & 22       & 1e-4 & 1e-6   & 100           & 100          \\
+Transport  & Pos  & 2  & 8  & 16 & 4x84x85   & 4x76x76   & 264      & 45       & 1e-4 & 1e-6   & 100           & 100          \\
+ToolHang   & Pos  & 2  & 8  & 16 & 2x240x240 & 2x216x216 & 256      & 22       & 1e-4 & 1e-6   & 100           & 100          \\
+Push-T     & Pos  & 2  & 8  & 16 & 1x96x96   & 1x84x84   & 256      & 22       & 1e-4 & 1e-6   & 100           & 100          \\
+Block Push & Pos  & 3  & 1  & 12 & N/A       & N/A       & 256      & 0        & 1e-4 & 1e-6   & 100           & 100          \\
+Kitchen    & Pos  & 2  & 8  & 16 & N/A       & N/A       & 256      & 0        & 1e-4 & 1e-6   & 100           & 100          \\
+\midrule
+Real Push-T     & Pos  & 2  & 6  & 16 & 2x320x240 & 2x288x216 & 67       & 22       & 1e-4 & 1e-6   & 100           & 16           \\
+Real Pour       & Pos  & 2  & 8  & 16 & 2x320x240 & 2x288x216 & 67       & 22       & 1e-4 & 1e-6   & 100           & 16           \\
+Real Spread     & Pos  & 2  & 8  & 16 & 2x320x240 & 2x288x216 & 67       & 22       & 1e-4 & 1e-6   & 100           & 16           \\
+Real Mug Flip   & Pos  & 2  & 8  & 16 & 2x320x240 & 2x288x216 & 67       & 22       & 1e-4 & 1e-6   & 100           & 16           \\
+\bottomrule
+\end{tabular}

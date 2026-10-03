@@ -1,0 +1,76 @@
+
+\section{Related Work}
+Creating capable robots without requiring explicit programming of behaviors is a longstanding challenge in the field \cite{atkeson1997robot, argall2009survey, ravichandar2020recent}.
+%In pursuit of this goal, imitation learning and behavior cloning  \cite{hussein2017imitation} have seen significant interest due to their appealing workflow. 
+While conceptually simple, behavior cloning has shown surprising promise on an array of real-world robot tasks, including manipulation \cite{zhang2018deep, florence2019self, mandlekar2020learning, mandlekar2020iris, zeng2021transporter, rahmatizadeh2018vision, avigal2022speedfolding} and autonomous driving \cite{pomerleau1988alvinn, bojarski2016end}. Current behavior cloning approaches can be categorized into two groups, depending on the policy's structure.
+
+%\section{Related Work}
+% Creating capable robots without requiring explicit programming of behaviors is a longstanding challenge in the field \cite{atkeson1997robot, argall2009survey, ravichandar2020recent}.
+% In pursuit of this goal, imitation learning \cite{hussein2017imitation} --- a paradigm where a robot learns to imitate demonstrated behavior --- has seen significant interest due to its appealing workflow of directly teaching a robot by example. A commonly employed form of imitation learning is behavior cloning, a supervised and model-free approach where the learner is provided paired $\langle observation, action\rangle$ data during training and learns to predict actions conditioned on observations at inference time. While conceptually straightforward, behavior cloning has shown surprising promise on an array of real-world robot tasks, including \todo{task list and citations here for behavior cloning works we want to cite}. Current behavior cloning approaches can be categorized into two groups, depending on the structure of the learned policy being employed.
+
+\textbf{Explicit Policy.}
+The simplest form of explicit policies maps from world state or observation directly to action \cite{pomerleau1988alvinn, zhang2018deep, florence2019self, ross2011reduction, toyer2020magical, rahmatizadeh2018vision, bojarski2016end}. They can be supervised with a direct regression loss and have efficient inference time with one forward pass. Unfortunately, this type of policy is not suitable for modeling multi-modal demonstrated behavior, 
+% since the L2 regression loss implies a Gaussian distribution for the predicted value \cite{mathieu2016mse}, 
+and struggles with high-precision tasks \cite{ibc}.
+% The simplest form of explicit policies maps from world state or observation directly to action \todo{citations, probably including bcrnn here}. 
+% This formulation has several appealing attributes. 
+% First, it is extremely straightforward to supervise such an approach during behavior cloning with a standard direct regression loss on predicted action error with respect to demonstrated behavior. 
+% Explicit policies also benefit from inference-time efficiency. Because actions are directly predicted by the policy, only a single forward pass is needed at each timestep to produce an action. 
+% Unfortunately, this type of policy is not suitable for modeling multi-modal demonstrated behavior and struggles with high-precision tasks \cite{ibc}.
+A popular approach to model multimodal action distributions while maintaining the simplicity of direction action mapping is convert the regression task into classification by discretizing the action space \cite{zeng2021transporter, wu2020spatial, avigal2022speedfolding}. 
+% However, the behavior temporal complexity of this approach is often limited, since the number of bins needed grows exponentially with increasing dimensionality.
+However, the number of bins needed to approximate a continuous action space grows exponentially with increasing dimensionality. 
+% Therefore, methods with discretized action space usually rely on hand-crafted action primitives \cite{zeng2021transporter, avigal2022speedfolding} in order to scale to complex tasks.
+Another approach is to combine Categorical and Gaussian distributions to represent continuous multimodal distributions via the use of MDNs \cite{bishop1994mixture, robomimic} or clustering with offset prediction \cite{bet, sharma2018multiple}. Nevertheless, these models tend to be sensitive to hyperparameter tuning, exhibit mode collapse, and are still limited in their ability to express high-precision behavior \cite{ibc}.
+
+% An extension to directly predicting actions is to instead predict explicit action distributions from which actions may be sampled \todo{Anything predicting unimodal distributions we should cite?}. If these predicted distributions admit multimodality, such as mixture models \todo{cite mixture density networks paper}, it is possible for explicit policies to model multimodal behavior.
+% \todo{Talk about the limitation of discritized action space}
+% Nevertheless, these models tend to be sensitive to hyperparmeter tuning, exhibit mode collapse during training, and are still limited in their ability to express high-precision behavior \cite{ibc}.
+
+%\ben{Anything else we want to say about BCRNN?}
+
+\textbf{Implicit Policy.}
+Implicit policies \citep{ibc, jarrett2020strictly} define distributions over actions by using Energy-Based Models (EBMs) \citep{lecun06atutorial, du2019implicit, dai2019exponential, grathwohl2020stein, du2020improved}. 
+In this setting, each action is assigned an energy value, with action prediction corresponding to the optimization problem of finding a minimal energy action. Since different actions may be assigned low energies, implicit policies naturally represent multi-modal distributions. However, existing implicit policies \citep{ibc} are unstable to train due to the necessity of drawing negative samples when computing the underlying Info-NCE loss. %Diffusion policy may be seen as a stable approach to train implicit policies, where we remove the necessity of drawing negative samples by instead directly learning gradients of the action energy landscape using denoising.  
+
+% \crossmark
+
+%\yilun{Would be good add additional works that build on top of IBC or use IBC for robotic control -- I'm not that familiar with those}
+
+
+% \begin{table}[h]
+%     \centering
+%     \setlength\tabcolsep{5 pt}
+%     \begin{tabular}{l|ccccc}
+%     \toprule
+%      %& IBC\cite{ibc} & LSTM-GMM\cite{robomimic} & BET\cite{bet} & Diffuser\cite{janner2022diffuser} & Ours\\
+%      & \cite{ibc} & \cite{robomimic} & \cite{bet} & \cite{janner2022diffuser} & Ours\\
+%     \midrule
+%     Multimodal          & \cmark    & \cmark    & \cmark    & \cmark    & \cmark\\
+%     Any Distribution    & \cmark    & \xmark    & \xmark    & \cmark    & \cmark\\
+%     Stable training     & \xmark    & \cmark    & \cmark    & \cmark    & \cmark\\
+%     High-dim action     & \xmark    & \xmark    & \cmark    & \cmark    & \cmark\\
+%     Position control    & \cmark    & \xmark    & \xmark    & \cmark    & \cmark\\
+%     Closed-loop control & \cmark    & \cmark    & \cmark    & \xmark    & \cmark\\
+%     Visual input        & \cmark    & \cmark    & \cmark    & \xmark    & \cmark\\
+%     \bottomrule
+%     \end{tabular}
+%     \caption{Add a table to contrast the capability? }
+%     \label{tab:my_label}
+% \end{table}
+
+
+
+\textbf{Diffusion Models.}
+Diffusion models are probabilistic generative models that iteratively refine randomly sampled noise into draws from an underlying distribution. They can also be conceptually understood as learning the gradient field of an implicit action score and then optimizing that gradient during inference.
+Diffusion models \citep{sohldickstein2015nonequilibrium, ho2020denoising} have recently been applied to solve various different control tasks \citep{janner2022diffuser, urain2022se, ajay2022conditional}.
+% more diffusion work can be added here 
+
+In particular, \citet{janner2022diffuser} and \citet{huang2023diffusion} explore how diffusion models may be  used in the context of planning and infer a trajectory of actions that may be executed in a given environment. 
+In the context of Reinforcement Learning, \citet{wang2022diffusion} use diffusion model for policy representation and regularization with state-based observations.
+In contrast, in this work, we explore how diffusion models may instead be effectively applied in the context of behavioral cloning for effective visuomotor control policy. 
+To construct effective visuomotor control policies, we propose to combine DDPM's ability to predict high-dimensional action squences with closed-loop control, as well as a new transformer architecture for action diffusion and a manner to integrate visual inputs into the action diffusion model.
+
+\citet{wang2023diffusion} explore how diffusion models learned from expert demonstrations can be used to augment classical explicit polices without directly taking advantage of diffusion models as policy representation.
+
+Concurrent to us, \citet{pearce2023imitating}, \citet{reuss2023goal} and \citet{hansen2023idql} has conducted a complimentary analysis of diffusion-based policies in simulated environments. While they focus more on effective sampling strategies, leveraging classifier-free guidance for goal-conditioning as well as applications in Reinforcement Learning, and we focus on effective action spaces, our empirical findings largely concur in the simulated regime.  In addition, our extensive real-world experiments provide strong evidence for the importance of a receding-horizon prediction scheme, the careful choice between velocity and position control, and the necessity of optimization for real-time inference and other critical design decisions for a physical robot system.

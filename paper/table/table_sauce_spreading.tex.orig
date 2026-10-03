@@ -1,0 +1,16 @@
+
+
+\small
+\begin{tabular}{r|c|c|c|c}
+\toprule
+         & \multicolumn{2}{c|}{Pour} & \multicolumn{2}{c}{Spread}    \\
+         & IoU & Succ & Coverage & Succ \% \\
+\midrule
+Human  & 0.79 &     1.00  & 0.79  &    1.00      \\
+\midrule
+LSTM-GMM & 0.06 & 0.00  &  0.27  & 0.00           \\
+Diffusion Policy  &  \textbf{0.74} &\textbf{0.79}   & \textbf{0.77}  & \textbf{1.00}   \\
+\bottomrule
+\end{tabular}
+
+

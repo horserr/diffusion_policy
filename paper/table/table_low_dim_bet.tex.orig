@@ -1,0 +1,60 @@
+% \setlength\tabcolsep{4 pt}
+% \begin{tabular}{c|cc|ccccc}
+% \toprule
+%  & \multicolumn{2}{c|}{ PushBlock} & \multicolumn{5}{c}{ Kitchen} \\
+%  & p1 & p2 & p1 & p2 & p3 & p4 & p5 \\
+% \midrule
+% BC-RNN \cite{} & \small .025 & \small .005 & \small .000  & \small .000  & \small .000  & \small .000  & \small .000  \\
+% %IBC & \small .000  & \small .000  & \small .000  & \small .000  & \small .000  & \small .000  & \small .000  \\
+% BET \cite{} & \small .907 & \small .549 & \small .000  & \small .000  & \small .000  & \small .000  & \small .000  \\
+% DiffusionPolicy-C & \small .499 & \small .151 & \small .000  & \small .000  & \small .000  & \small .000  & \small .000  \\
+% DiffusionPolicy-T & \small \textbf{.991} & \small \textbf{.937} & \small .000  & \small .000  & \small .000  & \small .000  & \small .000  \\
+% \bottomrule
+% \end{tabular}
+
+% this version uses number from the original paper (BET)
+% our numbers aggregated using
+% \setlength\tabcolsep{3.5 pt}
+% \begin{tabular}{r|cc|ccccc}
+% \toprule
+%  & \multicolumn{2}{c|}{BlockPush} & \multicolumn{5}{c}{Kitchen} \\
+%  & p1 & p2 & p1 & p2 & p3 & p4 & p5 \\
+% \midrule
+% LSTM-GMM \cite{robomimic} & \small 0.03 & \small 0.01 & \small 1.00 & \small 0.90 & \small 0.74 & \small 0.34 & \small 0.01 \\
+% IBC \cite{ibc} & \small 0.01 & \small 0.00 & \small 0.99 & \small 0.87 & \small 0.61 & \small 0.24 & \small 0.00 \\
+% BET \cite{bet} & \small 0.96 & \small 0.71 & \small 0.99 & \small 0.93 & \small 0.71 & \small 0.44 & \small 0.02 \\
+% \midrule
+% DiffusionPolicy-C & \small 0.50 & \small 0.15 & \small 0.93 & \small 0.56 & \small 0.15 & \small 0.02 & \small 0.00 \\
+% DiffusionPolicy-T & \small \textbf{0.99} & \small \textbf{0.94} & \small \textbf{1.00} & \small \textbf{0.97} & \small \textbf{0.89} & \small \textbf{0.74} & \small \textbf{0.07} \\
+% \bottomrule
+% \end{tabular}
+
+% \setlength\tabcolsep{6 pt}
+% \begin{tabular}{r|cc|cccc}
+% \toprule
+%  & \multicolumn{2}{c|}{BlockPush} & \multicolumn{4}{c}{Kitchen} \\
+%  & p1 & p2 & p1 & p2 & p3 & p4 \\
+% \midrule
+% LSTM-GMM \cite{robomimic} & \small 0.03 & \small 0.01 & \small \textbf{1.00} & \small 0.90 & \small 0.74 & \small 0.34 \\
+% IBC \cite{ibc} & \small 0.01 & \small 0.00 & \small 0.99 & \small 0.87 & \small 0.61 & \small 0.24 \\
+% BET \cite{bet} & \small 0.96 & \small 0.71 & \small 0.99 & \small 0.93 & \small 0.71 & \small 0.44 \\
+% \midrule
+% DiffusionPolicy-C & \small 0.50 & \small 0.15 & \small \textbf{1.00} & \small \textbf{1.00} & \small \textbf{0.99} & \small 0.95 \\
+% DiffusionPolicy-T & \small \textbf{0.99} & \small \textbf{0.94} & \small \textbf{1.00} & \small 0.99 & \small \textbf{0.99} & \small \textbf{0.96} \\
+% \bottomrule
+% \end{tabular}
+
+% Feb 28 update, reran diffusion cnn with obs global cond
+\setlength\tabcolsep{4.8 pt}
+\begin{tabular}{r|cc|cccc}
+\toprule
+ & \multicolumn{2}{c|}{BlockPush} & \multicolumn{4}{c}{Kitchen} \\
+ & p1 & p2 & p1 & p2 & p3 & p4 \\
+\midrule
+LSTM-GMM & \small 0.03 & \small 0.01 & \small \textbf{1.00} & \small 0.90 & \small 0.74 & \small 0.34 \\
+IBC & \small 0.01 & \small 0.00 & \small 0.99 & \small 0.87 & \small 0.61 & \small 0.24 \\
+BET & \small 0.96 & \small 0.71 & \small 0.99 & \small 0.93 & \small 0.71 & \small 0.44 \\
+DiffusionPolicy-C & \small 0.36 & \small 0.11 & \small \textbf{1.00} & \small \textbf{1.00} & \small \textbf{1.00} & \small \textbf{0.99} \\
+DiffusionPolicy-T & \small \textbf{0.99} & \small \textbf{0.94} & \small \textbf{1.00} & \small 0.99 & \small 0.99 & \small 0.96 \\
+\bottomrule
+\end{tabular}
