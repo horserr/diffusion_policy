@@ -1,23 +1,37 @@
-from typing import Dict, Tuple
+
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
-from einops import rearrange, reduce
 from diffusers.schedulers.scheduling_ddpm import DDPMScheduler
+from einops import reduce
 
 from diffusion_policy.model.common.normalizer import LinearNormalizer
-from diffusion_policy.policy.base_lowdim_policy import BaseLowdimPolicy
-from diffusion_policy.model.diffusion.transformer_for_diffusion import TransformerForDiffusion
 from diffusion_policy.model.diffusion.mask_generator import LowdimMaskGenerator
+from diffusion_policy.model.diffusion.transformer_for_diffusion import (
+    TransformerForDiffusion,
+)
+from diffusion_policy.policy.base_lowdim_policy import BaseLowdimPolicy
+
+# ============================================================================
+# DiffusionTransformerLowdimPolicy —— Transformer 骨干的条件扩散策略（低维观察版）
+#
+# 与 DiffusionUnetLowdimPolicy 的「扩散采样/损失」逻辑完全相同（条件 DDPM），
+# 唯一区别是噪声预测网络 ε_θ 换成 TransformerForDiffusion（论文 Fig.1c）：
+#   - 观察作为 cross-attention 条件（obs_as_cond=True），传入 transformer 的 cond；
+#   - 动作 token 之间使用 causal attention；
+#   - 也可用 inpainting 方式（obs_as_cond=False，观察拼在动作后面一起扩散）。
+#
+# Transformer 版本还额外提供 get_optimizer（用 model.configure_optimizers 的
+# AdamW + 分组 weight decay），这与 CNN 版本用 workspace 里的优化器不同。
+# ============================================================================
 
 class DiffusionTransformerLowdimPolicy(BaseLowdimPolicy):
-    def __init__(self, 
+    def __init__(self,
             model: TransformerForDiffusion,
             noise_scheduler: DDPMScheduler,
-            horizon, 
-            obs_dim, 
-            action_dim, 
-            n_action_steps, 
+            horizon,
+            obs_dim,
+            action_dim,
+            n_action_steps,
             n_obs_steps,
             num_inference_steps=None,
             obs_as_cond=False,
@@ -50,9 +64,9 @@ class DiffusionTransformerLowdimPolicy(BaseLowdimPolicy):
         if num_inference_steps is None:
             num_inference_steps = noise_scheduler.config.num_train_timesteps
         self.num_inference_steps = num_inference_steps
-    
+
     # ========= inference  ============
-    def conditional_sample(self, 
+    def conditional_sample(self,
             condition_data, condition_mask,
             cond=None, generator=None,
             # keyword arguments to scheduler.step
@@ -62,11 +76,11 @@ class DiffusionTransformerLowdimPolicy(BaseLowdimPolicy):
         scheduler = self.noise_scheduler
 
         trajectory = torch.randn(
-            size=condition_data.shape, 
+            size=condition_data.shape,
             dtype=condition_data.dtype,
             device=condition_data.device,
             generator=generator)
-    
+
         # set step values
         scheduler.set_timesteps(self.num_inference_steps)
 
@@ -79,18 +93,18 @@ class DiffusionTransformerLowdimPolicy(BaseLowdimPolicy):
 
             # 3. compute previous image: x_t -> x_t-1
             trajectory = scheduler.step(
-                model_output, t, trajectory, 
+                model_output, t, trajectory,
                 generator=generator,
                 **kwargs
                 ).prev_sample
-        
+
         # finally make sure conditioning is enforced
-        trajectory[condition_mask] = condition_data[condition_mask]        
+        trajectory[condition_mask] = condition_data[condition_mask]
 
         return trajectory
 
 
-    def predict_action(self, obs_dict: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
+    def predict_action(self, obs_dict: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]:
         """
         obs_dict: must include "obs" key
         result: must include "action" key
@@ -130,11 +144,11 @@ class DiffusionTransformerLowdimPolicy(BaseLowdimPolicy):
 
         # run sampling
         nsample = self.conditional_sample(
-            cond_data, 
+            cond_data,
             cond_mask,
             cond=cond,
             **self.kwargs)
-        
+
         # unnormalize prediction
         naction_pred = nsample[...,:Da]
         action_pred = self.normalizer['action'].unnormalize(naction_pred)
@@ -146,7 +160,7 @@ class DiffusionTransformerLowdimPolicy(BaseLowdimPolicy):
             start = To - 1
             end = start + self.n_action_steps
             action = action_pred[:,start:end]
-        
+
         result = {
             'action': action,
             'action_pred': action_pred
@@ -164,11 +178,11 @@ class DiffusionTransformerLowdimPolicy(BaseLowdimPolicy):
         self.normalizer.load_state_dict(normalizer.state_dict())
 
     def get_optimizer(
-            self, weight_decay: float, learning_rate: float, betas: Tuple[float, float]
+            self, weight_decay: float, learning_rate: float, betas: tuple[float, float]
         ) -> torch.optim.Optimizer:
         return self.model.configure_optimizers(
-                weight_decay=weight_decay, 
-                learning_rate=learning_rate, 
+                weight_decay=weight_decay,
+                learning_rate=learning_rate,
                 betas=tuple(betas))
 
     def compute_loss(self, batch):
@@ -190,7 +204,7 @@ class DiffusionTransformerLowdimPolicy(BaseLowdimPolicy):
                 trajectory = action[:,start:end]
         else:
             trajectory = torch.cat([action, obs], dim=-1)
-        
+
         # generate impainting mask
         if self.pred_action_steps_only:
             condition_mask = torch.zeros_like(trajectory, dtype=torch.bool)
@@ -202,24 +216,24 @@ class DiffusionTransformerLowdimPolicy(BaseLowdimPolicy):
         bsz = trajectory.shape[0]
         # Sample a random timestep for each image
         timesteps = torch.randint(
-            0, self.noise_scheduler.config.num_train_timesteps, 
+            0, self.noise_scheduler.config.num_train_timesteps,
             (bsz,), device=trajectory.device
         ).long()
         # Add noise to the clean images according to the noise magnitude at each timestep
         # (this is the forward diffusion process)
         noisy_trajectory = self.noise_scheduler.add_noise(
             trajectory, noise, timesteps)
-        
+
         # compute loss mask
         loss_mask = ~condition_mask
 
         # apply conditioning
         noisy_trajectory[condition_mask] = trajectory[condition_mask]
-        
+
         # Predict the noise residual
         pred = self.model(noisy_trajectory, timesteps, cond)
 
-        pred_type = self.noise_scheduler.config.prediction_type 
+        pred_type = self.noise_scheduler.config.prediction_type
         if pred_type == 'epsilon':
             target = noise
         elif pred_type == 'sample':

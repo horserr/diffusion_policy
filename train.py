@@ -1,11 +1,15 @@
 """
-Usage:
-Training:
-python train.py --config-name=train_diffusion_lowdim_workspace
+训练入口。用法示例：
+    python train.py --config-name=train_diffusion_unet_image_workspace task=pusht_image
+
+工作流程：
+    1. 用 hydra 读取 diffusion_policy/config/ 下的 YAML 配置（含命令行覆盖项）；
+    2. 解析 cfg._target_ 得到对应的 Workspace 类（如 TrainDiffusionUnetImageWorkspace）；
+    3. 实例化 Workspace 并调用 run() 开始训练（内部完成数据集、策略、训练循环与评测）。
 """
 
 import sys
-# use line-buffering for both stdout and stderr
+# 对 stdout/stderr 开启行缓冲，保证日志实时输出
 sys.stdout = open(sys.stdout.fileno(), mode='w', buffering=1)
 sys.stderr = open(sys.stderr.fileno(), mode='w', buffering=1)
 
@@ -14,7 +18,7 @@ from omegaconf import OmegaConf
 import pathlib
 from diffusion_policy.workspace.base_workspace import BaseWorkspace
 
-# allows arbitrary python code execution in configs using the ${eval:''} resolver
+# 允许在配置里用 ${eval:''} resolver 执行任意 python 表达式
 OmegaConf.register_new_resolver("eval", eval, replace=True)
 
 @hydra.main(
@@ -23,8 +27,7 @@ OmegaConf.register_new_resolver("eval", eval, replace=True)
         'diffusion_policy','config'))
 )
 def main(cfg: OmegaConf):
-    # resolve immediately so all the ${now:} resolvers
-    # will use the same time.
+    # 立即解析配置，使所有 ${now:} 等 resolver 使用同一时间戳
     OmegaConf.resolve(cfg)
 
     cls = hydra.utils.get_class(cfg._target_)
